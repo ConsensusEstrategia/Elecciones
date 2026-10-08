@@ -9,7 +9,7 @@
 
 <!-- Sellos de compilación. El de la fusión es nuevo; los de los módulos se
      conservan porque sus scripts comparan contra ellos. -->
-<meta name="Consensus-version" content="2026-09-29.F3">
+<meta name="Consensus-version" content="2026-10-08.F4">
 <meta name="Elec-version" content="2026-09-25.S2">
 <meta name="Dip-version" content="2026-09-27.D3-mapa">
 
@@ -2354,6 +2354,612 @@ body.Dip-con-modal{overflow: hidden;}
 
 <style>
 /* ===================================================================
+   MÓDULO Anl — Mapa de Análisis.
+
+   Clon independiente del mapa seccional de Dip, generado por build.py
+   desde las fuentes de Dip: si el original cambia, este lo sigue.
+   Todo va encapsulado bajo #Anl-app, igual que exige el contrato de
+   prefijos. Son las reglas del mapa más el cromo que su marcado usa.
+   =================================================================== */
+#Anl-app{display:block}
+#Anl-app *, #Anl-app *::before, #Anl-app *::after{box-sizing:border-box}
+#Anl-app [hidden]{display:none !important}
+#Anl-app h1, #Anl-app h2, #Anl-app h3{font-family:"Archivo","IBM Plex Sans",sans-serif;
+  font-weight:600;letter-spacing:-.01em}
+#Anl-app .Anl-main{max-width:var(--Dip-ancho-max);margin:0 auto;
+  padding:18px clamp(12px,2.4vw,22px) 28px}
+#Anl-app .Anl-mt-5{margin-top: 1.25rem}
+#Anl-app .Anl-flex{display: flex}
+#Anl-app .Anl-grid{display: grid}
+#Anl-app .Anl-hidden{display: none}
+#Anl-app .Anl-flex-1{flex: 1 1 0%}
+#Anl-app .Anl-grid-cols-3{grid-template-columns: repeat(3, minmax(0, 1fr))}
+#Anl-app .Anl-flex-col{flex-direction: column}
+#Anl-app .Anl-flex-wrap{flex-wrap: wrap}
+#Anl-app .Anl-px-5{padding-left: 1.25rem;
+  padding-right: 1.25rem}
+#Anl-app .Anl-pb-5{padding-bottom: 1.25rem}
+#Anl-app .Anl-text-right{text-align: right}
+#Anl-app .Anl-text-sm{font-size: 0.875rem;
+  line-height: 1.25rem}
+#Anl-app h1, #Anl-app h2, #Anl-app h3, #Anl-app .Anl-display{font-family: "Archivo", "IBM Plex Sans", sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 0;}
+#Anl-app .Anl-cifra{font-family: "Archivo", sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;}
+#Anl-app .Anl-contenedor{width: 100%;
+  max-width: var(--Dip-ancho-max);
+  margin-inline: auto;
+  padding-inline: 24px;}
+#Anl-app .Anl-panel{background: var(--Dip-pizarra);
+  border: 1px solid var(--Dip-linea-suave);
+  border-radius: var(--Dip-radio);}
+#Anl-app .Anl-panel-cabeza{display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--Dip-linea-suave);}
+#Anl-app .Anl-panel-titulo{font-size: 16px;}
+#Anl-app .Anl-panel-nota{color: var(--Dip-texto-tenue); font-size: 12.5px;}
+#Anl-app .Anl-campo{appearance: none;
+  width: 100%;
+  background: var(--Dip-pizarra-alta);
+  color: var(--Dip-texto);
+  border: 1px solid var(--Dip-linea);
+  border-radius: var(--Dip-radio-chico);
+  padding: 8px 30px 8px 11px;
+  font: inherit;
+  font-size: 13.5px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--Dip-texto-tenue) 50%),
+                    linear-gradient(135deg, var(--Dip-texto-tenue) 50%, transparent 50%);
+  background-position: calc(100% - 15px) 52%, calc(100% - 10px) 52%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  cursor: pointer;}
+#Anl-app input.Anl-campo{background-image: none;
+  padding-right: 11px;
+  cursor: text;}
+#Anl-app .Anl-campo:hover{border-color: var(--Dip-linea); background-color: var(--Elec-surface-3);}
+#Anl-app .Anl-campo:focus-visible, #Anl-app .Anl-boton:focus-visible, #Anl-app .Dip-filtro:focus-visible, #Anl-app .Dip-fila-seccion:focus-visible{outline: 2px solid var(--Dip-cian);
+  outline-offset: 2px;}
+#Anl-app .Anl-boton{background: var(--Dip-pizarra-alta);
+  color: var(--Dip-texto);
+  border: 1px solid var(--Dip-linea);
+  border-radius: var(--Dip-radio-chico);
+  padding: 8px 14px;
+  font: inherit;
+  font-size: 13.5px;
+  cursor: pointer;}
+#Anl-app .Anl-boton:hover{background: var(--Elec-surface-3);}
+@media (max-width: 860px){#Anl-app .Anl-contenedor{padding-inline: 16px;}}
+@media print{#Anl-app .Anl-no-imprimir, #Anl-app #Dip-selector-municipio-rapido, #Anl-app #Dip-buscador-seccion, #Anl-app #Dip-filtros-seccion, #Anl-app .Dip-mosaico, #Anl-app #Dip-estado-carga{display: none !important;}}
+@media print{#Anl-app .Anl-campo{border: 0; padding-left: 0; background-image: none; color: var(--Dip-texto);}}
+@media print{#Anl-app .Anl-panel, #Anl-app .Dip-hero, #Anl-app .Dip-kpi{border-color: var(--Dip-linea-suave);
+    box-shadow: none;
+    break-inside: avoid;}}
+#Anl-app .Anl-aviso{border-radius: var(--Dip-radio-chico);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 10px 0 0;
+  padding: 0;
+  color: var(--Dip-texto-medio);}
+#Anl-app .Anl-aviso:empty{display: none;}
+#Anl-app .Anl-aviso-ok, #Anl-app .Anl-aviso-error, #Anl-app .Anl-aviso-atencion{padding: 11px 14px;
+  border: 1px solid var(--Dip-linea);
+  border-left-width: 3px;
+  background: var(--Dip-pizarra-alta);}
+#Anl-app .Anl-aviso-ok{border-left-color: var(--Dip-ganada);}
+#Anl-app .Anl-aviso-atencion{border-left-color: var(--Dip-swing);}
+#Anl-app .Anl-aviso-error{border-left-color: var(--Dip-riesgo); color: var(--Dip-texto);}
+#Anl-app .Anl-aviso-pie{font-size: 12px; color: var(--Dip-texto-tenue); margin-top: 6px;}
+#Anl-app .Anl-boton-principal{background: var(--Dip-oro);
+  border-color: var(--Dip-oro);
+  color: var(--Elec-brand-deep);
+  font-weight: 600;}
+#Anl-app .Anl-boton-principal:hover{background: color-mix(in srgb, var(--Elec-accent) 82%, white);}
+#Anl-app .Anl-boton-sutil{background: transparent;
+  color: var(--Dip-texto-medio);
+  font-size: 12.5px;
+  padding: 5px 11px;}
+#Anl-app .Anl-grid > *{min-width: 0;}
+#Anl-app .Anl-aviso-demo{font-size: 12.5px;
+  color: var(--Dip-texto-medio);
+  padding: 10px 14px;
+  border: 1px dashed var(--Dip-linea);
+  border-radius: var(--Dip-radio-chico);
+  margin-top: 14px;}
+#Anl-app .Anl-aviso-demo b{color: var(--Dip-swing); font-weight: 600;}
+#Anl-app .Anl-boton-mini{font-size: 11.5px; padding: 4px 9px;}
+#Anl-app .leaflet-pane, #Anl-app .leaflet-tile, #Anl-app .leaflet-marker-icon, #Anl-app .leaflet-marker-shadow, #Anl-app .leaflet-tile-container, #Anl-app .leaflet-pane > svg, #Anl-app .leaflet-pane > canvas, #Anl-app .leaflet-zoom-box, #Anl-app .leaflet-image-layer, #Anl-app .leaflet-layer{position: absolute;
+	left: 0;
+	top: 0;}
+#Anl-app .leaflet-container{overflow: hidden;}
+#Anl-app .leaflet-tile, #Anl-app .leaflet-marker-icon, #Anl-app .leaflet-marker-shadow{-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+	  -webkit-user-drag: none;}
+#Anl-app .leaflet-tile::selection{background: transparent;}
+#Anl-app .leaflet-safari .leaflet-tile{image-rendering: -webkit-optimize-contrast;}
+#Anl-app .leaflet-safari .leaflet-tile-container{width: 1600px;
+	height: 1600px;
+	-webkit-transform-origin: 0 0;}
+#Anl-app .leaflet-marker-icon, #Anl-app .leaflet-marker-shadow{display: block;}
+#Anl-app .leaflet-container .leaflet-overlay-pane svg{max-width: none !important;
+	max-height: none !important;}
+#Anl-app .leaflet-container .leaflet-marker-pane img, #Anl-app .leaflet-container .leaflet-shadow-pane img, #Anl-app .leaflet-container .leaflet-tile-pane img, #Anl-app .leaflet-container img.leaflet-image-layer, #Anl-app .leaflet-container .leaflet-tile{max-width: none !important;
+	max-height: none !important;
+	width: auto;
+	padding: 0;}
+#Anl-app .leaflet-container img.leaflet-tile{mix-blend-mode: plus-lighter;}
+#Anl-app .leaflet-container.leaflet-touch-zoom{-ms-touch-action: pan-x pan-y;
+	touch-action: pan-x pan-y;}
+#Anl-app .leaflet-container.leaflet-touch-drag{-ms-touch-action: pinch-zoom;
+	
+	touch-action: none;
+	touch-action: pinch-zoom;}
+#Anl-app .leaflet-container.leaflet-touch-drag.leaflet-touch-zoom{-ms-touch-action: none;
+	touch-action: none;}
+#Anl-app .leaflet-container{-webkit-tap-highlight-color: transparent;}
+#Anl-app .leaflet-container a{-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);}
+#Anl-app .leaflet-tile{filter: inherit;
+	visibility: hidden;}
+#Anl-app .leaflet-tile-loaded{visibility: inherit;}
+#Anl-app .leaflet-zoom-box{width: 0;
+	height: 0;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	z-index: 800;}
+#Anl-app .leaflet-overlay-pane svg{-moz-user-select: none;}
+#Anl-app .leaflet-pane{z-index: 400;}
+#Anl-app .leaflet-tile-pane{z-index: 200;}
+#Anl-app .leaflet-overlay-pane{z-index: 400;}
+#Anl-app .leaflet-shadow-pane{z-index: 500;}
+#Anl-app .leaflet-marker-pane{z-index: 600;}
+#Anl-app .leaflet-tooltip-pane{z-index: 650;}
+#Anl-app .leaflet-popup-pane{z-index: 700;}
+#Anl-app .leaflet-map-pane canvas{z-index: 100;}
+#Anl-app .leaflet-map-pane svg{z-index: 200;}
+#Anl-app .leaflet-vml-shape{width: 1px;
+	height: 1px;}
+#Anl-app .leaflet-control{position: relative;
+	z-index: 800;
+	pointer-events: visiblePainted; 
+	pointer-events: auto;}
+#Anl-app .leaflet-top, #Anl-app .leaflet-bottom{position: absolute;
+	z-index: 1000;
+	pointer-events: none;}
+#Anl-app .leaflet-top{top: 0;}
+#Anl-app .leaflet-right{right: 0;}
+#Anl-app .leaflet-bottom{bottom: 0;}
+#Anl-app .leaflet-left{left: 0;}
+#Anl-app .leaflet-control{float: left;
+	clear: both;}
+#Anl-app .leaflet-right .leaflet-control{float: right;}
+#Anl-app .leaflet-top .leaflet-control{margin-top: 10px;}
+#Anl-app .leaflet-bottom .leaflet-control{margin-bottom: 10px;}
+#Anl-app .leaflet-left .leaflet-control{margin-left: 10px;}
+#Anl-app .leaflet-right .leaflet-control{margin-right: 10px;}
+#Anl-app .leaflet-fade-anim .leaflet-popup{opacity: 0;
+	-webkit-transition: opacity 0.2s linear;
+	   -moz-transition: opacity 0.2s linear;
+	        transition: opacity 0.2s linear;}
+#Anl-app .leaflet-fade-anim .leaflet-map-pane .leaflet-popup{opacity: 1;}
+#Anl-app .leaflet-zoom-animated{-webkit-transform-origin: 0 0;
+	    -ms-transform-origin: 0 0;
+	        transform-origin: 0 0;}
+#Anl-app svg.leaflet-zoom-animated{will-change: transform;}
+#Anl-app .leaflet-zoom-anim .leaflet-zoom-animated{-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
+	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);}
+#Anl-app .leaflet-zoom-anim .leaflet-tile, #Anl-app .leaflet-pan-anim .leaflet-tile{-webkit-transition: none;
+	   -moz-transition: none;
+	        transition: none;}
+#Anl-app .leaflet-zoom-anim .leaflet-zoom-hide{visibility: hidden;}
+#Anl-app .leaflet-interactive{cursor: pointer;}
+#Anl-app .leaflet-grab{cursor: -webkit-grab;
+	cursor:    -moz-grab;
+	cursor:         grab;}
+#Anl-app .leaflet-crosshair, #Anl-app .leaflet-crosshair .leaflet-interactive{cursor: crosshair;}
+#Anl-app .leaflet-popup-pane, #Anl-app .leaflet-control{cursor: auto;}
+#Anl-app .leaflet-dragging .leaflet-grab, #Anl-app .leaflet-dragging .leaflet-grab .leaflet-interactive, #Anl-app .leaflet-dragging .leaflet-marker-draggable{cursor: move;
+	cursor: -webkit-grabbing;
+	cursor:    -moz-grabbing;
+	cursor:         grabbing;}
+#Anl-app .leaflet-marker-icon, #Anl-app .leaflet-marker-shadow, #Anl-app .leaflet-image-layer, #Anl-app .leaflet-pane > svg path, #Anl-app .leaflet-tile-container{pointer-events: none;}
+#Anl-app .leaflet-marker-icon.leaflet-interactive, #Anl-app .leaflet-image-layer.leaflet-interactive, #Anl-app .leaflet-pane > svg path.leaflet-interactive, #Anl-app svg.leaflet-image-layer.leaflet-interactive path{pointer-events: visiblePainted; 
+	pointer-events: auto;}
+#Anl-app .leaflet-container{background: #ddd;
+	outline-offset: 1px;}
+#Anl-app .leaflet-container a{color: #0078A8;}
+#Anl-app .leaflet-zoom-box{border: 2px dotted #38f;
+	background: rgba(255,255,255,0.5);}
+#Anl-app .leaflet-container{font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-size: 0.75rem;
+	line-height: 1.5;}
+#Anl-app .leaflet-bar{box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	border-radius: 4px;}
+#Anl-app .leaflet-bar a{background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: black;}
+#Anl-app .leaflet-bar a, #Anl-app .leaflet-control-layers-toggle{background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;}
+#Anl-app .leaflet-bar a:hover, #Anl-app .leaflet-bar a:focus{background-color: #f4f4f4;}
+#Anl-app .leaflet-bar a:first-child{border-top-left-radius: 4px;
+	border-top-right-radius: 4px;}
+#Anl-app .leaflet-bar a:last-child{border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom: none;}
+#Anl-app .leaflet-bar a.leaflet-disabled{cursor: default;
+	background-color: #f4f4f4;
+	color: #bbb;}
+#Anl-app .leaflet-touch .leaflet-bar a{width: 30px;
+	height: 30px;
+	line-height: 30px;}
+#Anl-app .leaflet-touch .leaflet-bar a:first-child{border-top-left-radius: 2px;
+	border-top-right-radius: 2px;}
+#Anl-app .leaflet-touch .leaflet-bar a:last-child{border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;}
+#Anl-app .leaflet-control-zoom-in, #Anl-app .leaflet-control-zoom-out{font: bold 18px 'Lucida Console', Monaco, monospace;
+	text-indent: 1px;}
+#Anl-app .leaflet-touch .leaflet-control-zoom-in, #Anl-app .leaflet-touch .leaflet-control-zoom-out{font-size: 22px;}
+#Anl-app .leaflet-control-layers{box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	background: #fff;
+	border-radius: 5px;}
+#Anl-app .leaflet-control-layers-toggle{background-image: none;
+	width: 36px;
+	height: 36px;}
+#Anl-app .leaflet-retina .leaflet-control-layers-toggle{background-image: none;
+	background-size: 26px 26px;}
+#Anl-app .leaflet-touch .leaflet-control-layers-toggle{width: 44px;
+	height: 44px;}
+#Anl-app .leaflet-control-layers .leaflet-control-layers-list, #Anl-app .leaflet-control-layers-expanded .leaflet-control-layers-toggle{display: none;}
+#Anl-app .leaflet-control-layers-expanded .leaflet-control-layers-list{display: block;
+	position: relative;}
+#Anl-app .leaflet-control-layers-expanded{padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;}
+#Anl-app .leaflet-control-layers-scrollbar{overflow-y: scroll;
+	overflow-x: hidden;
+	padding-right: 5px;}
+#Anl-app .leaflet-control-layers-selector{margin-top: 2px;
+	position: relative;
+	top: 1px;}
+#Anl-app .leaflet-control-layers label{display: block;
+	font-size: 13px;
+	font-size: 1.08333em;}
+#Anl-app .leaflet-control-layers-separator{height: 0;
+	border-top: 1px solid #ddd;
+	margin: 5px -10px 5px -6px;}
+#Anl-app .leaflet-default-icon-path{background-image: none;}
+#Anl-app .leaflet-container .leaflet-control-attribution{background: #fff;
+	background: rgba(255, 255, 255, 0.8);
+	margin: 0;}
+#Anl-app .leaflet-control-attribution, #Anl-app .leaflet-control-scale-line{padding: 0 5px;
+	color: #333;
+	line-height: 1.4;}
+#Anl-app .leaflet-control-attribution a{text-decoration: none;}
+#Anl-app .leaflet-control-attribution a:hover, #Anl-app .leaflet-control-attribution a:focus{text-decoration: underline;}
+#Anl-app .leaflet-attribution-flag{display: inline !important;
+	vertical-align: baseline !important;
+	width: 1em;
+	height: 0.6669em;}
+#Anl-app .leaflet-left .leaflet-control-scale{margin-left: 5px;}
+#Anl-app .leaflet-bottom .leaflet-control-scale{margin-bottom: 5px;}
+#Anl-app .leaflet-control-scale-line{border: 2px solid #777;
+	border-top: none;
+	line-height: 1.1;
+	padding: 2px 5px 1px;
+	white-space: nowrap;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.8);
+	text-shadow: 1px 1px #fff;}
+#Anl-app .leaflet-control-scale-line:not(:first-child){border-top: 2px solid #777;
+	border-bottom: none;
+	margin-top: -2px;}
+#Anl-app .leaflet-control-scale-line:not(:first-child):not(:last-child){border-bottom: 2px solid #777;}
+#Anl-app .leaflet-touch .leaflet-control-attribution, #Anl-app .leaflet-touch .leaflet-control-layers, #Anl-app .leaflet-touch .leaflet-bar{box-shadow: none;}
+#Anl-app .leaflet-touch .leaflet-control-layers, #Anl-app .leaflet-touch .leaflet-bar{border: 2px solid rgba(0,0,0,0.2);
+	background-clip: padding-box;}
+#Anl-app .leaflet-popup{position: absolute;
+	text-align: center;
+	margin-bottom: 20px;}
+#Anl-app .leaflet-popup-content-wrapper{padding: 1px;
+	text-align: left;
+	border-radius: 12px;}
+#Anl-app .leaflet-popup-content{margin: 13px 24px 13px 20px;
+	line-height: 1.3;
+	font-size: 13px;
+	font-size: 1.08333em;
+	min-height: 1px;}
+#Anl-app .leaflet-popup-content p{margin: 17px 0;
+	margin: 1.3em 0;}
+#Anl-app .leaflet-popup-tip-container{width: 40px;
+	height: 20px;
+	position: absolute;
+	left: 50%;
+	margin-top: -1px;
+	margin-left: -20px;
+	overflow: hidden;
+	pointer-events: none;}
+#Anl-app .leaflet-popup-tip{width: 17px;
+	height: 17px;
+	padding: 1px;
+
+	margin: -10px auto 0;
+	pointer-events: auto;
+
+	-webkit-transform: rotate(45deg);
+	   -moz-transform: rotate(45deg);
+	    -ms-transform: rotate(45deg);
+	        transform: rotate(45deg);}
+#Anl-app .leaflet-popup-content-wrapper, #Anl-app .leaflet-popup-tip{background: white;
+	color: #333;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);}
+#Anl-app .leaflet-container a.leaflet-popup-close-button{position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	text-align: center;
+	width: 24px;
+	height: 24px;
+	font: 16px/24px Tahoma, Verdana, sans-serif;
+	color: #757575;
+	text-decoration: none;
+	background: transparent;}
+#Anl-app .leaflet-container a.leaflet-popup-close-button:hover, #Anl-app .leaflet-container a.leaflet-popup-close-button:focus{color: #585858;}
+#Anl-app .leaflet-popup-scrolled{overflow: auto;}
+#Anl-app .leaflet-oldie .leaflet-popup-content-wrapper{-ms-zoom: 1;}
+#Anl-app .leaflet-oldie .leaflet-popup-tip{width: 24px;
+	margin: 0 auto;
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);}
+#Anl-app .leaflet-oldie .leaflet-control-zoom, #Anl-app .leaflet-oldie .leaflet-control-layers, #Anl-app .leaflet-oldie .leaflet-popup-content-wrapper, #Anl-app .leaflet-oldie .leaflet-popup-tip{border: 1px solid #999;}
+#Anl-app .leaflet-div-icon{background: #fff;
+	border: 1px solid #666;}
+#Anl-app .leaflet-tooltip{position: absolute;
+	padding: 6px;
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	color: #222;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.4);}
+#Anl-app .leaflet-tooltip.leaflet-interactive{cursor: pointer;
+	pointer-events: auto;}
+#Anl-app .leaflet-tooltip-top:before, #Anl-app .leaflet-tooltip-bottom:before, #Anl-app .leaflet-tooltip-left:before, #Anl-app .leaflet-tooltip-right:before{position: absolute;
+	pointer-events: none;
+	border: 6px solid transparent;
+	background: transparent;
+	content: "";}
+#Anl-app .leaflet-tooltip-bottom{margin-top: 6px;}
+#Anl-app .leaflet-tooltip-top{margin-top: -6px;}
+#Anl-app .leaflet-tooltip-bottom:before, #Anl-app .leaflet-tooltip-top:before{left: 50%;
+	margin-left: -6px;}
+#Anl-app .leaflet-tooltip-top:before{bottom: 0;
+	margin-bottom: -12px;
+	border-top-color: #fff;}
+#Anl-app .leaflet-tooltip-bottom:before{top: 0;
+	margin-top: -12px;
+	margin-left: -6px;
+	border-bottom-color: #fff;}
+#Anl-app .leaflet-tooltip-left{margin-left: -6px;}
+#Anl-app .leaflet-tooltip-right{margin-left: 6px;}
+#Anl-app .leaflet-tooltip-left:before, #Anl-app .leaflet-tooltip-right:before{top: 50%;
+	margin-top: -6px;}
+#Anl-app .leaflet-tooltip-left:before{right: 0;
+	margin-right: -12px;
+	border-left-color: #fff;}
+#Anl-app .leaflet-tooltip-right:before{left: 0;
+	margin-left: -12px;
+	border-right-color: #fff;}
+@media print{#Anl-app .leaflet-control{-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;}}
+#Anl-app .Anl-mapa-cabeza{display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--Dip-linea-suave);}
+#Anl-app .Anl-mapa-sello{display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--Dip-oro);
+  border: 1px solid color-mix(in srgb, var(--Dip-oro) 42.0%, transparent);
+  background: var(--Dip-oro-tenue);
+  border-radius: 999px;
+  padding: 3px 11px;
+  white-space: nowrap;}
+#Anl-app .Anl-mapa-controles{display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--Dip-linea-suave);
+  background: rgba(22, 34, 58, 0.34);}
+#Anl-app .Anl-mapa-grupo{display: flex; align-items: center; gap: 9px;}
+#Anl-app .Anl-mapa-conmutador{display: inline-flex;
+  border: 1px solid var(--Dip-linea);
+  border-radius: var(--Dip-radio-chico);
+  overflow: hidden;}
+#Anl-app .Anl-mapa-opcion{background: var(--Dip-pizarra-alta);
+  color: var(--Dip-texto-medio);
+  border: 0;
+  border-right: 1px solid var(--Dip-linea);
+  padding: 6px 12px;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;}
+#Anl-app .Anl-mapa-opcion:last-child{border-right: 0;}
+#Anl-app .Anl-mapa-opcion:hover{color: var(--Dip-texto); background: var(--Elec-surface-3);}
+#Anl-app .Anl-mapa-opcion[aria-pressed="true"]{background: var(--Dip-texto);
+  color: var(--Dip-tinta);
+  font-weight: 600;}
+#Anl-app .Anl-mapa-opcion:focus-visible{outline: 2px solid var(--Dip-cian); outline-offset: -2px;}
+#Anl-app .Anl-mapa-et{font-size: 11.5px;
+  color: var(--Dip-texto-tenue);
+  white-space: nowrap;}
+#Anl-app .Anl-deslizador{-webkit-appearance: none;
+  appearance: none;
+  width: 168px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--Dip-linea) 0%, var(--Dip-cian) 100%);
+  outline: none;
+  cursor: pointer;}
+#Anl-app .Anl-deslizador::-webkit-slider-thumb{-webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--Dip-texto);
+  border: 2px solid var(--Dip-tinta);
+  cursor: pointer;}
+#Anl-app .Anl-deslizador::-moz-range-thumb{width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--Dip-texto);
+  border: 2px solid var(--Dip-tinta);
+  cursor: pointer;}
+#Anl-app .Anl-deslizador:focus-visible{outline: 2px solid var(--Dip-cian); outline-offset: 4px;}
+#Anl-app .Anl-mapa-valor{font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  color: var(--Dip-texto);
+  min-width: 42px;
+  text-align: right;}
+#Anl-app .Anl-mapa-leyenda{display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-left: auto;
+  font-size: 11.5px;
+  color: var(--Dip-texto-medio);}
+#Anl-app .Anl-mapa-leyenda span{display: inline-flex; align-items: center; gap: 6px;}
+#Anl-app .Anl-mapa-cuadro{width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  display: inline-block;}
+#Anl-app .Anl-mapa-lienzo{position: relative;
+  height: clamp(460px, 68vh, 860px);
+  background: var(--Dip-tinta);}
+#Anl-app #Anl-mapa-leaflet{position: absolute; inset: 0;}
+#Anl-app .Anl-mapa-capa{position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(7, 13, 26, 0.88);
+  color: var(--Dip-texto-medio);
+  font-size: 13.5px;
+  text-align: center;
+  padding: 24px;
+  z-index: 600;}
+#Anl-app .Anl-mapa-capa[data-anl-estado="listo"]{display: none;}
+#Anl-app .Anl-mapa-hilo{width: 34px;
+  height: 34px;
+  border: 3px solid var(--Dip-linea);
+  border-top-color: var(--Dip-cian);
+  border-radius: 50%;
+  margin: 0 auto 14px;
+  animation: Dip-giro 900ms linear infinite;}
+#Anl-app .Anl-mapa-ficha{position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 252px;
+  max-width: calc(100% - 28px);
+  background: rgba(14, 23, 41, 0.95);
+  border: 1px solid var(--Dip-linea);
+  border-radius: var(--Dip-radio);
+  padding: 14px 16px;
+  z-index: 620;
+  backdrop-filter: blur(6px);}
+#Anl-app .Anl-mapa-ficha[hidden]{display: none !important;}
+#Anl-app .Anl-mapa-ficha-num{font-family: "Archivo", sans-serif;
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;}
+#Anl-app .Anl-mapa-ficha-mun{font-size: 11.5px;
+  color: var(--Dip-texto-tenue);
+  margin-top: 3px;}
+#Anl-app .Anl-mapa-ficha-lista{list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;}
+#Anl-app .Anl-mapa-ficha-lista li{display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  border-bottom: 1px solid var(--Dip-linea-suave);
+  padding-bottom: 5px;}
+#Anl-app .Anl-mapa-ficha-k{color: var(--Dip-texto-tenue);}
+#Anl-app .Anl-mapa-ficha-v{font-variant-numeric: tabular-nums; color: var(--Dip-texto);}
+#Anl-app .Anl-mapa-cerrar{position: absolute;
+  top: 9px;
+  right: 10px;
+  background: none;
+  border: 0;
+  color: var(--Dip-texto-tenue);
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 5px;}
+#Anl-app .Anl-mapa-cerrar:hover{color: var(--Dip-texto);}
+#Anl-app .Anl-mapa-pie{display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 12px 24px 16px;}
+#Anl-app #Anl-mapa-leaflet[data-anl-base="osm"] .leaflet-tile-pane{filter: saturate(0.45) brightness(0.62) contrast(1.08);}
+#Anl-app #Anl-mapa-leaflet[data-anl-base="satelite"] .leaflet-tile-pane{filter: saturate(0.82) brightness(0.74) contrast(1.04);}
+#Anl-app #Anl-mapa-leaflet.leaflet-container{background: var(--Dip-tinta);}
+#Anl-app #Anl-mapa-leaflet .leaflet-control-attribution{background: rgba(7, 13, 26, 0.82);
+  color: var(--Dip-texto-tenue);
+  font-size: 10px;}
+#Anl-app #Anl-mapa-leaflet .leaflet-control-attribution a{color: var(--Dip-texto-medio);}
+#Anl-app #Anl-mapa-leaflet .leaflet-bar a{background: var(--Dip-pizarra-alta);
+  color: var(--Dip-texto);
+  border-bottom-color: var(--Dip-linea);}
+#Anl-app #Anl-mapa-leaflet .leaflet-bar a:hover{background: var(--Elec-surface-3);}
+#Anl-app #Anl-mapa-leaflet .leaflet-tooltip{background: rgba(14, 23, 41, 0.96);
+  border: 1px solid var(--Dip-linea);
+  color: var(--Dip-texto);
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 12px;
+  box-shadow: none;}
+#Anl-app #Anl-mapa-leaflet .leaflet-tooltip:before{display: none;}
+@media (max-width: 720px){#Anl-app .Anl-mapa-ficha{position: static; width: auto; margin: 12px;}}
+@media (max-width: 720px){#Anl-app .Anl-mapa-leyenda{margin-left: 0;}}
+
+</style>
+
+<style>
+/* ===================================================================
    CAPA DE FUSIÓN — va DESPUÉS de las hojas de los dos módulos.
    Sello 2026-09-29.F3
 
@@ -2512,6 +3118,35 @@ html[data-tema="oscuro"]{
   .Cx-vista[hidden]{display:none !important}
 }
 
+/* -------------------------------------------------------------------
+   5. F4 — CINCO PESTAÑAS
+
+   «Día D» y «Redes y atención» suben a la barra principal. Sus paneles no
+   se mueven: siguen dentro de #Dip-app, porque su CSS está encapsulado
+   ahí y sacarlos obligaría a reescribir la hoja entera del módulo. Lo que
+   cambia es quién decide cuál se ve.
+   ------------------------------------------------------------------- */
+
+/* La tira de pestañas interna de Dip ya no manda, y mostrar dos juegos de
+   pestañas para lo mismo confunde. Se oculta, no se borra: activa() les
+   sigue escribiendo aria-selected y quitarlas rompería ese recorrido. */
+#Dip-app #Dip-pestanas, #Dip-app .Dip-pestanas{display:none !important}
+
+/* Cabecera por pestaña. Tres copias hermanas, cada una con sus propios
+   ids; la de territorial conserva los originales para que el núcleo siga
+   escribiendo donde siempre. Se muestran con el mismo atributo que ya
+   gobierna los paneles, sin maquinaria nueva.
+   El !important es necesario: las clases de utilidad del marcado fijan
+   `display:flex` con la misma especificidad. */
+#Dip-app .Dip-cab{display:none !important}
+#Dip-app[data-pestana="territorial"] .Dip-cab[data-dip-cab="territorial"],
+#Dip-app[data-pestana="diad"] .Dip-cab[data-dip-cab="diad"],
+#Dip-app[data-pestana="redes"] .Dip-cab[data-dip-cab="redes"]{display:flex !important}
+
+/* Con cinco pestañas la barra se llena antes: los subtítulos se recortan
+   un punto para que quepan sin recurrir al scroll horizontal en portátil. */
+@media (max-width:1180px){ .Cx-tab{padding-left:15px;padding-right:15px} }
+
 </style>
 </head>
 
@@ -2536,7 +3171,10 @@ html[data-tema="oscuro"]{
     <div class="Cx-marca-titulo">
       <div class="Cx-kicker">Consensus Estrategia · Inteligencia de datos y análisis electoral</div>
       <h1 id="Cx-h1-Elec">Preferencia electoral municipal — alcaldías 2027</h1>
-      <h1 id="Cx-h1-Dip" hidden>Plataforma electoral — territorio, Día D y redes</h1>
+      <h1 id="Cx-h1-Dip" hidden>Análisis de candidatos — tablero territorial</h1>
+      <h1 id="Cx-h1-DiaD" hidden>Día D — operación de jornada</h1>
+      <h1 id="Cx-h1-Redes" hidden>Redes y atención — escucha digital</h1>
+      <h1 id="Cx-h1-Anl" hidden>Mapa de análisis seccional</h1>
     </div>
 
     <!-- Controles. `Cx-acc-global` está SIEMPRE visible: es donde viven el
@@ -2549,6 +3187,9 @@ html[data-tema="oscuro"]{
     <div class="Cx-marca-acc">
       <div class="Cx-acc" id="Cx-acc-Elec"></div>
       <div class="Cx-acc" id="Cx-acc-Dip" hidden></div>
+      <div class="Cx-acc" id="Cx-acc-DiaD" hidden></div>
+      <div class="Cx-acc" id="Cx-acc-Redes" hidden></div>
+      <div class="Cx-acc" id="Cx-acc-Anl" hidden></div>
       <div class="Cx-acc" id="Cx-acc-global"><button type="button" id="Elec-btn-tema" class="Cx-btn"
               title="Cambiar entre tema claro y oscuro"
               aria-label="Cambiar entre tema claro y oscuro">&#9686;</button>
@@ -2559,15 +3200,32 @@ html[data-tema="oscuro"]{
   </div>
 </header>
 
+<!-- Cinco pestañas. «Día D» y «Redes y atención» eran subpestañas dentro
+     del módulo Dip y suben aquí: sus paneles siguen viviendo dentro de
+     #Dip-app —su CSS está encapsulado ahí— pero quien decide cuál se ve
+     pasa a ser esta barra, no la tira interna de Dip, que queda oculta.
+     «Mapa de Análisis» es un módulo nuevo e independiente. -->
 <nav class="Cx-nivel1" aria-label="Módulos del tablero">
   <div class="Cx-nivel1-int" id="Cx-nivel1" role="tablist">
     <button type="button" role="tab" class="Cx-tab" id="Cx-tab-Elec"
             aria-selected="true" aria-controls="Cx-vista-Elec" data-cx-vista="Elec">
-      Elec<span class="Cx-tab-sub">Preferencia electoral · alcaldías 2027</span>
+      Encuestas Electorales<span class="Cx-tab-sub">Alcaldías 2027</span>
     </button>
     <button type="button" role="tab" class="Cx-tab" id="Cx-tab-Dip"
             aria-selected="false" tabindex="-1" aria-controls="Cx-vista-Dip" data-cx-vista="Dip">
-      Dip<span class="Cx-tab-sub">Plataforma electoral · territorio y redes</span>
+      Análisis de Candidatos<span class="Cx-tab-sub">Tablero territorial</span>
+    </button>
+    <button type="button" role="tab" class="Cx-tab" id="Cx-tab-DiaD"
+            aria-selected="false" tabindex="-1" aria-controls="Cx-vista-Dip" data-cx-vista="DiaD">
+      Día D<span class="Cx-tab-sub">Operación de jornada</span>
+    </button>
+    <button type="button" role="tab" class="Cx-tab" id="Cx-tab-Redes"
+            aria-selected="false" tabindex="-1" aria-controls="Cx-vista-Dip" data-cx-vista="Redes">
+      Redes y atención<span class="Cx-tab-sub">Escucha digital</span>
+    </button>
+    <button type="button" role="tab" class="Cx-tab" id="Cx-tab-Anl"
+            aria-selected="false" tabindex="-1" aria-controls="Cx-vista-Anl" data-cx-vista="Anl">
+      Mapa de Análisis<span class="Cx-tab-sub">Cartografía seccional</span>
     </button>
   </div>
 </nav>
@@ -2806,7 +3464,8 @@ html[data-tema="oscuro"]{
 <div class="Cx-vista" id="Cx-vista-Dip" role="tabpanel" aria-labelledby="Cx-tab-Dip" hidden>
 <div id="Dip-app">
 <!-- ============================ Barra de marca ============================ -->
-<header class="Dip-contenedor Dip-flex Dip-flex-wrap Dip-items-center Dip-justify-between Dip-gap-4 Dip-pt-6 Dip-pb-5">
+<header class="Dip-contenedor Dip-flex Dip-flex-wrap Dip-items-center Dip-justify-between Dip-gap-4 Dip-pt-6 Dip-pb-5 Dip-cab"
+        data-dip-cab="territorial">
   <div class="Dip-marca">
     <div>
       <p class="Dip-marca-nombre Dip-display">Consensus Estrategia</p>
@@ -2823,15 +3482,39 @@ html[data-tema="oscuro"]{
     <button id="Dip-boton-reporte" type="button" class="Dip-boton Dip-no-imprimir">Exportar reporte ejecutivo</button>
   </div>
 </header>
+
+<header class="Dip-contenedor Dip-flex Dip-flex-wrap Dip-items-center Dip-justify-between Dip-gap-4 Dip-pt-6 Dip-pb-5 Dip-cab"
+        data-dip-cab="diad">
+  <div class="Dip-flex Dip-items-center Dip-gap-4">
+    <div class="Dip-text-right">
+      <p id="Dip-contexto-eleccion-diad" class="Dip-text-sm" style="color: var(--Dip-texto-medio);">Cargando elección</p>
+      <p id="Dip-contexto-corte-diad" class="Dip-marca-linea">Corte pendiente</p>
+    </div>
+    <button id="Dip-boton-precandidatos-diad" type="button" class="Dip-boton Dip-no-imprimir">+ Gestionar precandidatos</button>
+    <button id="Dip-boton-reporte-diad" type="button" class="Dip-boton Dip-no-imprimir">Exportar reporte ejecutivo</button>
+  </div>
+</header>
+
+<header class="Dip-contenedor Dip-flex Dip-flex-wrap Dip-items-center Dip-justify-between Dip-gap-4 Dip-pt-6 Dip-pb-5 Dip-cab"
+        data-dip-cab="redes">
+  <div class="Dip-flex Dip-items-center Dip-gap-4">
+    <div class="Dip-text-right">
+      <p id="Dip-contexto-eleccion-redes" class="Dip-text-sm" style="color: var(--Dip-texto-medio);">Cargando elección</p>
+      <p id="Dip-contexto-corte-redes" class="Dip-marca-linea">Corte pendiente</p>
+    </div>
+    <button id="Dip-boton-precandidatos-redes" type="button" class="Dip-boton Dip-no-imprimir">+ Gestionar precandidatos</button>
+    <button id="Dip-boton-reporte-redes" type="button" class="Dip-boton Dip-no-imprimir">Exportar reporte ejecutivo</button>
+  </div>
+</header>
 <!-- ======================= FASE 2 · Pestañas (propuesta) ======================= -->
 <nav class="Dip-contenedor Dip-no-imprimir" aria-label="Módulos de la plataforma">
   <div class="Dip-pestanas" role="tablist" id="Dip-pestanas">
     <button type="button" role="tab" class="Dip-pestana" id="Dip-tab-territorial" data-pestana="territorial"
             aria-selected="true" aria-controls="Dip-tablero">Tablero territorial</button>
     <button type="button" role="tab" class="Dip-pestana" id="Dip-tab-diad" data-pestana="diad"
-            aria-selected="false" aria-controls="Dip-panel-diad" tabindex="-1">Día D <span class="Dip-pestana-nueva">Nuevo</span></button>
+            aria-selected="false" aria-controls="Dip-panel-diad" tabindex="-1">Día D</button>
     <button type="button" role="tab" class="Dip-pestana" id="Dip-tab-redes" data-pestana="redes"
-            aria-selected="false" aria-controls="Dip-panel-redes" tabindex="-1">Redes y atención <span class="Dip-pestana-nueva">Nuevo</span></button>
+            aria-selected="false" aria-controls="Dip-panel-redes" tabindex="-1">Redes y atención</button>
   </div>
 </nav>
 
@@ -3413,8 +4096,101 @@ html[data-tema="oscuro"]{
 </div>
 </div>
 
+<!-- ============== PESTAÑA 5 · MÓDULO Anl (mapa independiente) ============== -->
+<div class="Cx-vista" id="Cx-vista-Anl" role="tabpanel" aria-labelledby="Cx-tab-Anl" hidden>
+<div id="Anl-app">
+<div class="Anl-main">
+<section id="Anl-mapa-seccional" class="Anl-panel Anl-mt-5"
+           aria-labelledby="Anl-mapa-titulo">
+
+    <div class="Anl-mapa-cabeza">
+      <div>
+        <h2 class="Anl-panel-titulo" id="Anl-mapa-titulo">Mapa de análisis seccional</h2>
+        <p class="Anl-panel-nota" id="Anl-mapa-conteo">Cargando cartografia</p>
+      </div>
+      <span class="Anl-mapa-sello">Datos simulados &middot; demostracion</span>
+    </div>
+
+    <div class="Anl-mapa-controles Anl-no-imprimir">
+      <div class="Anl-mapa-grupo">
+        <label class="Anl-mapa-et" for="Anl-mapa-opacidad">Transparencia</label>
+        <input id="Anl-mapa-opacidad" class="Anl-deslizador" type="range"
+               min="0" max="100" step="1" value="78"
+               aria-label="Opacidad del relleno de las secciones">
+        <output class="Anl-mapa-valor" id="Anl-mapa-opacidad-valor" for="Anl-mapa-opacidad">78%</output>
+      </div>
+
+      <div class="Anl-mapa-grupo">
+        <span class="Anl-mapa-et">Capa base</span>
+        <div class="Anl-mapa-conmutador" role="group" aria-label="Capa base del mapa">
+          <button type="button" class="Anl-mapa-opcion" id="Anl-mapa-base-osm"
+                  data-anl-base="osm" aria-pressed="true">Mapa</button>
+          <button type="button" class="Anl-mapa-opcion" id="Anl-mapa-base-sat"
+                  data-anl-base="satelite" aria-pressed="false">Satelite</button>
+          <button type="button" class="Anl-mapa-opcion" id="Anl-mapa-base-nada"
+                  data-anl-base="ninguna" aria-pressed="false">Sin base</button>
+        </div>
+      </div>
+
+      <div class="Anl-mapa-grupo">
+        <label class="Anl-mapa-et" for="Anl-mapa-municipio">Municipio</label>
+        <select id="Anl-mapa-municipio" class="Anl-campo" style="width: 210px;"></select>
+      </div>
+
+      <div class="Anl-mapa-grupo">
+        <label class="Anl-mapa-et" for="Anl-mapa-estatus">Estatus</label>
+        <select id="Anl-mapa-estatus" class="Anl-campo" style="width: 150px;">
+          <option value="todas">Todas</option>
+          <option value="ganada">Clave ganadas</option>
+          <option value="swing">Competidas</option>
+          <option value="riesgo">En riesgo</option>
+        </select>
+      </div>
+
+      <button id="Anl-mapa-recargar" type="button" class="Anl-boton">Recargar hoja</button>
+
+      <div class="Anl-mapa-leyenda">
+        <span><i class="Anl-mapa-cuadro" style="background: var(--Elec-mapa-ganada);"></i>Clave ganada</span>
+        <span><i class="Anl-mapa-cuadro" style="background: var(--Elec-mapa-swing);"></i>Competida</span>
+        <span><i class="Anl-mapa-cuadro" style="background: var(--Elec-mapa-riesgo);"></i>En riesgo</span>
+        <span><i class="Anl-mapa-cuadro" style="background: var(--Elec-mapa-sindato); border: 1px solid var(--Elec-line);"></i>Sin dato</span>
+      </div>
+    </div>
+
+    <div id="Anl-mapa-aviso" class="Anl-aviso Anl-aviso-atencion" role="status" hidden
+         style="margin: 14px 24px 0;"></div>
+
+    <div class="Anl-mapa-lienzo">
+      <div id="Anl-mapa-leaflet" role="application"
+           aria-label="Mapa de las secciones electorales de Jalisco"></div>
+
+      <div class="Anl-mapa-capa" id="Anl-mapa-capa" data-anl-estado="cargando">
+        <div>
+          <div class="Anl-mapa-hilo" aria-hidden="true"></div>
+          <div id="Anl-mapa-capa-texto">Descomprimiendo la cartografia de las 4,080 secciones&hellip;</div>
+        </div>
+      </div>
+
+      <aside class="Anl-mapa-ficha" id="Anl-mapa-ficha" hidden aria-live="polite">
+        <button type="button" class="Anl-mapa-cerrar" id="Anl-mapa-ficha-cerrar"
+                aria-label="Cerrar la ficha de la seccion">&times;</button>
+        <div class="Anl-mapa-ficha-num" id="Anl-mapa-ficha-num"></div>
+        <div class="Anl-mapa-ficha-mun" id="Anl-mapa-ficha-mun"></div>
+        <ul class="Anl-mapa-ficha-lista" id="Anl-mapa-ficha-lista"></ul>
+      </aside>
+    </div>
+
+    <div class="Anl-mapa-pie">
+      <p class="Anl-panel-nota" id="Anl-mapa-fuente"></p>
+      <p class="Anl-panel-nota" id="Anl-mapa-corte"></p>
+    </div>
+  </section>
+</div>
+</div>
+</div>
+
 <footer class="Cx-pie">
-  <p><b>Compilación fusionada 2026-09-29.F3</b> · módulo Elec 2026-09-25.S2 · módulo Dip 2026-09-27.D3-mapa ·
+  <p><b>Compilación fusionada 2026-10-08.F4</b> · módulo Elec 2026-09-25.S2 · módulo Dip 2026-09-27.D3-mapa ·
      Consensus Estrategia — Inteligencia de Datos y Análisis Electoral.</p>
   <p>Cada pestaña conserva su propia nota de fuente, método y derechos en su
      pie. No difundir durante veda electoral.</p>
@@ -3453,26 +4229,51 @@ html[data-tema="oscuro"]{
 (function (global) {
   'use strict';
 
-  var VISTAS = ['Elec', 'Dip'];
+  var VISTAS = ['Elec', 'Dip', 'DiaD', 'Redes', 'Anl'];
+
+  /* Cinco vistas sobre TRES paneles. «Día D» y «Redes y atención» eran
+     subpestañas del módulo Dip; sus paneles siguen dentro de #Dip-app
+     porque su CSS está encapsulado ahí, y moverlos obligaría a reescribir
+     su hoja entera. Lo que cambia es quién decide cuál se ve: antes la
+     tira interna de Dip, ahora esta barra. */
+  var PANEL = { Elec: 'Elec', Dip: 'Dip', DiaD: 'Dip', Redes: 'Dip', Anl: 'Anl' };
+
+  /* Subestado que cada vista de la familia Dip impone a #Dip-app. Se
+     aplica llamando a DipFase2.irA(), que conserva la lógica pegada al
+     cambio de subpestaña: al salir de Día D para su reproducción, al
+     entrar a territorial remide la tabla seccional. */
+  var SUBPESTANA = { Dip: 'territorial', DiaD: 'dia-d', Redes: 'redes' };
+
   var TITULOS = {
-    Elec: 'Elec · Preferencia electoral municipal — alcaldías 2027 · Consensus Estrategia',
-    Dip:  'Dip · Plataforma electoral (territorio, Día D y redes) · Consensus Estrategia'
+    Elec:  'Encuestas electorales · Preferencia municipal, alcaldías 2027 · Consensus Estrategia',
+    Dip:   'Análisis de candidatos · Tablero territorial · Consensus Estrategia',
+    DiaD:  'Día D · Operación de jornada · Consensus Estrategia',
+    Redes: 'Redes y atención · Escucha digital · Consensus Estrategia',
+    Anl:   'Mapa de análisis seccional · Consensus Estrategia'
   };
 
   /* ================================================================
      1. CxHash
      ================================================================ */
-  var subs = { Elec: '', Dip: '' };
+  var subs = { Elec: '', Dip: '', DiaD: '', Redes: '', Anl: '' };
 
   function interpreta() {
     var h = String(global.location.hash || '').replace(/^#/, '');
     if (!h) return { vista: null, sub: '' };
     var p = h.split('/');
-    if (VISTAS.indexOf(p[0]) >= 0) return { vista: p[0], sub: p.slice(1).join('/') };
+    if (VISTAS.indexOf(p[0]) >= 0) {
+      var sub = p.slice(1).join('/');
+      /* `#Dip/dia-d` y `#Dip/redes` eran subestados; ahora son vistas. */
+      if (p[0] === 'Dip' && sub === 'dia-d') return { vista: 'DiaD', sub: '' };
+      if (p[0] === 'Dip' && sub === 'redes') return { vista: 'Redes', sub: '' };
+      return { vista: p[0], sub: sub };
+    }
 
-    /* Compatibilidad con los enlaces que ya circulan. Un `#dia-d`
-       repartido antes de la fusión debe seguir abriendo esa pestaña. */
-    if (h === 'dia-d' || h === 'redes') return { vista: 'Dip', sub: h };
+    /* Compatibilidad con los enlaces que ya circulan. `#dia-d` y
+       `#Dip/redes` se repartieron cuando eran subpestañas; ahora resuelven
+       a su pestaña principal. */
+    if (h === 'dia-d') return { vista: 'DiaD', sub: '' };
+    if (h === 'redes') return { vista: 'Redes', sub: '' };
     if (h === 'Dip-app') return { vista: 'Dip', sub: '' };
     if (/^entidad=/.test(h)) return { vista: 'Elec', sub: h };
     if (h === 'Elec-app' || /^Elec-s-/.test(h)) return { vista: 'Elec', sub: '' };
@@ -3507,7 +4308,7 @@ html[data-tema="oscuro"]{
     }
   };
 
-  var oyentesSub = { Elec: [], Dip: [] };
+  var oyentesSub = { Elec: [], Dip: [], DiaD: [], Redes: [], Anl: [] };
 
   function avisaSub(vista, sub) {
     oyentesSub[vista].forEach(function (fn) { try { fn(sub); } catch (e) {} });
@@ -3581,7 +4382,7 @@ html[data-tema="oscuro"]{
      3. CxShell
      ================================================================ */
   var vistaActual = null;
-  var alMostrar = { Elec: [], Dip: [] };
+  var alMostrar = { Elec: [], Dip: [], DiaD: [], Redes: [], Anl: [] };
   var alTema = [];
 
   function el(id) { return document.getElementById(id); }
@@ -3609,13 +4410,19 @@ html[data-tema="oscuro"]{
     if (vista === vistaActual) { if (empujarHash) escribeHash(); return; }
     vistaActual = vista;
 
+    /* Los paneles se resuelven por PANEL, no por nombre de vista: tres
+       vistas comparten el de Dip y no deben ocultárselo entre ellas. */
+    var panelActivo = PANEL[vista];
+    ['Elec', 'Dip', 'Anl'].forEach(function (p) {
+      var nodo = el('Cx-vista-' + p);
+      if (nodo) nodo.hidden = (p !== panelActivo);
+    });
+
     VISTAS.forEach(function (v) {
       var act = (v === vista);
-      var panel = el('Cx-vista-' + v);
       var tab = el('Cx-tab-' + v);
       var h1 = el('Cx-h1-' + v);
       var acc = el('Cx-acc-' + v);
-      if (panel) panel.hidden = !act;
       if (h1) h1.hidden = !act;
       if (acc) acc.hidden = !act;
       if (tab) {
@@ -3624,18 +4431,23 @@ html[data-tema="oscuro"]{
       }
     });
 
+    /* La familia Dip impone su subestado por el camino del propio módulo. */
+    if (SUBPESTANA[vista] && global.DipFase2 && global.DipFase2.irA) {
+      try { global.DipFase2.irA(SUBPESTANA[vista]); } catch (e) {}
+    }
+
     document.body.setAttribute('data-cx-vista', vista);
     document.title = TITULOS[vista] || TITULOS.Elec;
     var enlace = el('Cx-marca-enlace');
-    if (enlace) enlace.setAttribute('href', '#Cx-vista-' + vista);
+    if (enlace) enlace.setAttribute('href', '#Cx-vista-' + panelActivo);
 
     if (empujarHash) escribeHash();
 
-    var panel = el('Cx-vista-' + vista);
+    var panel = el('Cx-vista-' + panelActivo);
     remideGraficas(panel);
     global.requestAnimationFrame(function () {
       remideGraficas(panel);
-      alMostrar[vista].forEach(function (fn) { try { fn(); } catch (e) {} });
+      (alMostrar[vista] || []).forEach(function (fn) { try { fn(); } catch (e) {} });
     });
     global.scrollTo({ top: 0, behavior: 'auto' });
   }
@@ -6528,6 +7340,10 @@ if (typeof window.Chart === "undefined") {
     sinDato: '--Elec-mapa-sindato'
   });
 
+  /* Qué copia de «Gestionar precandidatos» abrió el modal, para
+     devolverle el foco al cerrarlo. */
+  var ultimoDisparadorModal = null;
+
   var ETIQUETAS_CLASE = {
     ganada: 'Clave ganada',
     swing: 'Competida',
@@ -8242,7 +9058,7 @@ if (typeof window.Chart === "undefined") {
       modal.classList.remove('Dip-flex');
     }
     document.body.classList.remove('Dip-con-modal');
-    var disparador = $('#Dip-boton-precandidatos');
+    var disparador = ultimoDisparadorModal || $('#Dip-boton-precandidatos');
     if (disparador) disparador.focus();
   }
 
@@ -8364,6 +9180,13 @@ if (typeof window.Chart === "undefined") {
     $('#Dip-contexto-eleccion').textContent =
       e.cargo + ' · ' + nombreTerritorio(e) + ' · ' + nombreCoalicion(e);
     $('#Dip-contexto-corte').textContent = 'Corte al ' + fechaLarga(estado.fechaCorte);
+    /* F4: la cabecera existe tres veces, una por pestaña. El núcleo
+       sigue escribiendo en la suya de siempre y se refleja en las otras. */
+    ['-diad', '-redes'].forEach(function (sfx) {
+      var a = $('#Dip-contexto-eleccion' + sfx), b = $('#Dip-contexto-corte' + sfx);
+      if (a) a.textContent = $('#Dip-contexto-eleccion').textContent;
+      if (b) b.textContent = $('#Dip-contexto-corte').textContent;
+    });
     $('#Dip-pie-version').textContent =
       'Esquema ' + (estado.meta.version_esquema || 'n/d') +
       ' · generado el ' + fechaLarga((estado.meta.generado_en || '').slice(0, 10));
@@ -8499,8 +9322,13 @@ if (typeof window.Chart === "undefined") {
     });
 
     escucha('#Dip-boton-exportar', 'click', exportaCsv);
-    escucha('#Dip-boton-reporte', 'click', imprimeReporte);
-    escucha('#Dip-boton-precandidatos', 'click', abreModal);
+    ['', '-diad', '-redes'].forEach(function (sfx) {
+      escucha('#Dip-boton-reporte' + sfx, 'click', imprimeReporte);
+      escucha('#Dip-boton-precandidatos' + sfx, 'click', function (ev) {
+        ultimoDisparadorModal = ev.currentTarget;
+        abreModal();
+      });
+    });
     escucha('#Dip-btn-cerrar-precandidatos', 'click', cierraModal);
     escucha('#Dip-boton-registrar', 'click', registraPrecandidato);
     escucha('#Dip-boton-exportar-monitoreo', 'click', exportaConfiguracionMonitoreo);
@@ -9484,7 +10312,7 @@ DipTablero.crear({ fuente: Dip_descomprimeMaestro });
       t.tabIndex = si ? 0 : -1;
       if (si && enfocar) t.focus();
     });
-    CxHash.escribir('Dip', (HASH[nombre] || '').replace(/^#/, ''));
+    /* El hash es de la cáscara desde la F4: aquí ya no se escribe. */
     if (nombre !== 'diad') detiene();
     pintaActiva(true);
     if (nombre === 'territorial') global.dispatchEvent(new Event('resize'));
@@ -9577,8 +10405,8 @@ DipTablero.crear({ fuente: Dip_descomprimeMaestro });
       }, 650);
     });
 
-    var sub = CxHash.sub('Dip');
-    var inicial = sub === 'dia-d' ? 'diad' : sub === 'redes' ? 'redes' : 'territorial';
+    var v = CxShell.vista();
+    var inicial = v === 'DiaD' ? 'diad' : v === 'Redes' ? 'redes' : 'territorial';
     activa(inicial);
     // Primera pasada inmediata: sin ella los selectores espejo quedan vacíos
     // hasta el primer tic del intervalo, y un clic en ese lapso no cambia nada.
@@ -9594,8 +10422,6 @@ DipTablero.crear({ fuente: Dip_descomprimeMaestro });
       if (n !== actual) activa(n);
     }
   };
-  CxShell.alCambiarSub('Dip', function (sub) { global.DipFase2.irA(sub); });
-
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', conecta);
   else conecta();
 })(window);
@@ -10219,6 +11045,7 @@ window.Dip_MAPA_CATALOGO = "{\"1\":\"ACATIC\",\"2\":\"ACATLAN DE JUAREZ\",\"3\":
         vista.mapa.invalidateSize();
         var b = limitesDe(function () { return true; });
         if (b && b.isValid()) vista.mapa.fitBounds(b, { padding: [20, 20] });
+        vista.encuadrado = vista.mapa.getSize().x > 50;
         global.Dip_MAPA = {
           mapa: vista.mapa, recargar: cargaHoja,
           ir: function (s) { selecciona(s); vuelaASeccion(s); },
@@ -10273,7 +11100,698 @@ window.Dip_MAPA_CATALOGO = "{\"1\":\"ACATIC\",\"2\":\"ACATLAN DE JUAREZ\",\"3\":
     repintar: function () { try { refrescaEstilos(); pintaConteo(); } catch (e) {} },
     /* Leaflet mide su contenedor al crearse. Creado dentro de un panel
        oculto, mide 0: hay que avisarle cuando su pestaña se muestra. */
-    remedir: function () { try { if (vista.mapa) vista.mapa.invalidateSize(); } catch (e) {} }
+    remedir: function () {
+      try {
+        if (!vista.mapa) return;
+        vista.mapa.invalidateSize();
+        /* La primera vez que el panel se hace visible no basta con
+           remedir: hay que REENCUADRAR. Si el mapa nacio oculto, su
+           contenedor medIa 0 px y el fitBounds del arranque calculo un
+           zoom sin sentido — el mapa se veIa como un bloque de color
+           macizo. Despues no se vuelve a tocar, para no deshacer el
+           encuadre que el usuario haya elegido. */
+        if (!vista.encuadrado) {
+          var b = limitesDe(function () { return true; });
+          if (b && b.isValid()) {
+            vista.mapa.fitBounds(b, { padding: [20, 20] });
+            vista.encuadrado = true;
+          }
+        }
+      } catch (e) {}
+    }
+  };
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arranca);
+  else arranca();
+})(window);
+</script>
+
+<!-- Módulo Anl: el mismo mapa, instancia aparte. Comparte los blobs de
+     cartografía de Dip como fuente de SOLO LECTURA y parsea su propio
+     objeto, de modo que ninguna instancia puede mutar lo que ve la otra. -->
+<script>
+/* ===================================================================
+   CONSENSUS ESTRATEGIA · modulo Anl — MAPA DE ANALISIS (clon independiente)
+   (2026-09-27.D3-mapa)
+
+   Modulo INDEPENDIENTE. No lee el nucleo ni ningun estado de Dip: se
+   gobierna solo con su propio selector de municipio. Pinta
+   sobre cartografia real del INE (4,080 secciones, auditada) coloreada
+   con los valores que el usuario edita en su Google Sheet.
+
+   Cadena de origenes de datos, en orden, con degradacion suave:
+     1. URL publicada (Archivo > Compartir > Publicar en la web > CSV).
+        Es la unica que manda cabeceras CORS de forma fiable.
+     2. gviz/tq?tqx=out:csv  — funciona si el documento esta compartido
+        con "cualquiera con el enlace".
+     3. export?format=csv    — sin CORS entre origenes; ultimo intento.
+     4. Respaldo incrustado  — la instantanea del libro original, para que
+        el mapa nunca quede en blanco.
+   =================================================================== */
+(function (global) {
+  'use strict';
+
+  /* ─────────── Lo unico que hay que tocar para cambiar de hoja ─────────── */
+  var HOJA = {
+    id: '1nGFnRIVC9HLoWnhCNx7jnXHsJ-0pd4TqYc9_awD4MU4',
+    gid_secciones: '1960540408',
+    gid_config:    '1857778157',
+    /* Pega aqui la URL que devuelve "Publicar en la web > CSV" de la hoja
+       SECCIONES. Empieza por https://docs.google.com/spreadsheets/d/e/2PACX-
+       Mientras este vacia se intentan las rutas 2 y 3. */
+    publicada_secciones: '',
+    publicada_config: '',
+
+    /* true  = la columna COLOR_HEX de la hoja manda sobre la paleta.
+              Control manual por sección; esas celdas NO siguen el tema
+              claro/oscuro ni las separaciones de color validadas.
+       false = manda el tema. La columna se ignora sin borrarla. */
+    usarColorHex: true
+  };
+
+  var CLAVE_OPACIDAD = 'Anl-mapa-opacidad';
+  var CLAVE_BASE = 'Anl-mapa-base';
+  var COLOR = CxPaleta.registrar({
+    ganada:  '--Elec-mapa-ganada',
+    swing:   '--Elec-mapa-swing',
+    riesgo:  '--Elec-mapa-riesgo',
+    sinDato: '--Elec-mapa-sindato',
+    /* Trazo de cada polígono. Antes: claro para la sección activa y
+       casi negro para el resto, porque el lienzo era oscuro. Ahora son
+       tokens y se invierten con el tema: filete del color de la
+       superficie para separar vecinos, tinta fuerte para la activa. */
+    trazo:       '--Elec-surface',
+    trazoActivo: '--Elec-ink'
+  });
+  var ETIQUETA = { ganada: 'Clave ganada', swing: 'Competida', riesgo: 'En riesgo', 'sin dato': 'Sin dato' };
+  /* Columnas que empiezan por VOTOS_ pero NO son un partido: son calculadas. */
+  var NO_PARTIDO = ['VOTOS_GANADOR','VOTOS_MEJOR_RIVAL','VOTOS_PROPIO','VOTOS_SEGUNDO',
+                    'VOTOS_NO_REGISTRADOS','VOTOS_NULOS'];
+
+  function $(s) { return document.querySelector(s); }
+  var fmtE = new Intl.NumberFormat('es-MX', { maximumFractionDigits: 0 });
+  var fmtD = new Intl.NumberFormat('es-MX', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  function ent(n) { return fmtE.format(Math.round(Number(n) || 0)); }
+  function pct(n) { return fmtD.format((Number(n) || 0) * 100) + '%'; }
+
+  /* Normaliza para cruzar nombres de municipio entre el nucleo (con acentos y
+     minusculas) y el catalogo del IEPC (mayusculas, sin acentos). */
+  function llaveMun(t) {
+    return String(t || '').toUpperCase()
+      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+      .replace(/[^A-Z0-9]+/g, ' ').trim();
+  }
+
+  var vista = {
+    mapa: null, lienzo: null, capa: null, bases: null, base: 'osm',
+    porSeccion: Object.create(null),   /* clave -> capa Leaflet */
+    datos: Object.create(null),        /* clave -> fila de la hoja */
+    rasgos: [],                        /* GeoJSON de las 4,080 secciones */
+    catalogo: {},                      /* cve municipio -> nombre */
+    partidos: [],
+    opacidad: 0.78,
+    filtroMun: 'todos',
+    filtroEstatus: 'todas',
+    activa: null,
+    origen: '',
+    globo: null,
+    iniciado: false
+  };
+
+  /* ═══════════════ 1 · Lectura del Google Sheet ═══════════════ */
+
+  /* Analizador de CSV completo: comillas, comas dentro de comillas y saltos de
+     linea escapados. Un split(',') deja "1,767" partido en dos y desplaza toda
+     la fila, que es justo como se corrompen estas cargas sin avisar. */
+  function leeCSV(texto) {
+    var filas = [], fila = [], campo = '', i = 0, n = texto.length, comillas = false, ch;
+    if (texto.charCodeAt(0) === 0xFEFF) { i = 1; }
+    for (; i < n; i++) {
+      ch = texto[i];
+      if (comillas) {
+        if (ch === '"') {
+          if (texto[i + 1] === '"') { campo += '"'; i++; }
+          else { comillas = false; }
+        } else { campo += ch; }
+      } else if (ch === '"') { comillas = true; }
+      else if (ch === ',') { fila.push(campo); campo = ''; }
+      else if (ch === '\n') { fila.push(campo); filas.push(fila); fila = []; campo = ''; }
+      else if (ch !== '\r') { campo += ch; }
+    }
+    if (campo.length || fila.length) { fila.push(campo); filas.push(fila); }
+    return filas;
+  }
+
+  /* Google Sheets exporta el valor FORMATEADO: "1,767" y "52.2%". Hay que
+     deshacer el separador de miles y el porcentaje antes de calcular. */
+  function num(v) {
+    if (v === null || v === undefined) return null;
+    var t = String(v).trim();
+    if (!t) return null;
+    var porciento = t.indexOf('%') >= 0;
+    t = t.replace(/[%\s]/g, '').replace(/,/g, '');
+    var x = parseFloat(t);
+    if (isNaN(x)) return null;
+    return porciento ? x / 100 : x;
+  }
+
+  function urls(gid, publicada) {
+    var u = [];
+    if (publicada) {
+      u.push(publicada.indexOf('output=csv') >= 0 ? publicada
+             : publicada + (publicada.indexOf('?') >= 0 ? '&' : '?') + 'output=csv');
+    }
+    u.push('https://docs.google.com/spreadsheets/d/' + HOJA.id +
+           '/gviz/tq?tqx=out:csv&gid=' + gid);
+    u.push('https://docs.google.com/spreadsheets/d/' + HOJA.id +
+           '/export?format=csv&gid=' + gid);
+    return u;
+  }
+
+  function traeCSV(gid, publicada) {
+    var lista = urls(gid, publicada), k = 0;
+    function intenta() {
+      if (k >= lista.length) return Promise.reject(new Error('sin_acceso'));
+      var url = lista[k++];
+      return fetch(url, { cache: 'no-store', redirect: 'follow' })
+        .then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.text();
+        })
+        .then(function (t) {
+          /* Una hoja no publicada devuelve la pagina de inicio de sesion con
+             estado 200: si empieza por "<" no es un CSV. */
+          if (!t || t.charAt(0) === '<') throw new Error('no_es_csv');
+          return { texto: t, url: url };
+        })
+        .catch(function () { return intenta(); });
+    }
+    return intenta();
+  }
+
+  function indexa(filas) {
+    if (!filas.length) return null;
+    var enc = filas[0].map(function (h) { return String(h || '').trim().toUpperCase(); });
+    var ix = {}, i;
+    for (i = 0; i < enc.length; i++) { if (enc[i] && !(enc[i] in ix)) ix[enc[i]] = i; }
+    if (!('SECCION' in ix)) return null;
+
+    /* Los partidos se DESCUBREN en el encabezado: agregar o quitar una columna
+       VOTOS_<PARTIDO> en la hoja no exige tocar este archivo. */
+    var partidos = [];
+    for (i = 0; i < enc.length; i++) {
+      if (enc[i].indexOf('VOTOS_') === 0 && NO_PARTIDO.indexOf(enc[i]) < 0) {
+        partidos.push({ col: i, nombre: enc[i].slice(6) });
+      }
+    }
+
+    var datos = Object.create(null), total = 0;
+    for (var f = 1; f < filas.length; f++) {
+      var r = filas[f];
+      if (!r || r.length < 2) continue;
+      var s = num(r[ix.SECCION]);
+      if (s === null) continue;
+      var clase = String(r[ix.CLASIFICACION] !== undefined ? r[ix.CLASIFICACION] : '').trim().toLowerCase();
+      if (['ganada','swing','riesgo'].indexOf(clase) < 0) clase = 'sin dato';
+      var votos = partidos.map(function (p) { return { nombre: p.nombre, v: num(r[p.col]) || 0 }; });
+      datos[s] = {
+        seccion: s,
+        municipio: ix.MUNICIPIO !== undefined ? r[ix.MUNICIPIO] : '',
+        cveMun: num(r[ix.CVE_MUNICIPIO]),
+        distritoF: num(r[ix.DISTRITO_FEDERAL]),
+        tipo: ix.TIPO_SECCION !== undefined ? r[ix.TIPO_SECCION] : '',
+        colonias: ix.COLONIAS !== undefined ? r[ix.COLONIAS] : '',
+        listaNominal: num(r[ix.LISTA_NOMINAL]),
+        votacion: num(r[ix.VOTACION_TOTAL]),
+        participacion: num(r[ix.PARTICIPACION_PCT]),
+        ganador: ix.GANADOR !== undefined ? r[ix.GANADOR] : '',
+        margen: num(r[ix.MARGEN_PCT]),
+        clase: clase,
+        target: num(r[ix.TARGET_MOVILIZACION]),
+        color: ix.COLOR_HEX !== undefined ? String(r[ix.COLOR_HEX] || '').trim() : '',
+        nota: ix.NOTA !== undefined ? r[ix.NOTA] : '',
+        alerta: ix.ALERTA !== undefined ? r[ix.ALERTA] : '',
+        votos: votos
+      };
+      total++;
+    }
+    return total ? { datos: datos, total: total, partidos: partidos.map(function (p) { return p.nombre; }) } : null;
+  }
+
+  function descomprime(b64) {
+    if (typeof DecompressionStream !== 'function') {
+      return Promise.reject(new Error('Este navegador no descomprime el paquete. ' +
+        'Hace falta Chrome 80, Firefox 113, Safari 16.4 o posterior.'));
+    }
+    var bytes = Uint8Array.from(atob(b64), function (c) { return c.charCodeAt(0); });
+    return new Response(new Blob([bytes]).stream()
+      .pipeThrough(new DecompressionStream('gzip'))).text().then(JSON.parse);
+  }
+
+  function respaldoIncrustado() {
+    return descomprime(global.Dip_MAPA_RESPALDO_GZ).then(function (p) {
+      var CL = ['ganada','swing','riesgo','sin dato'], datos = Object.create(null), i, f;
+      for (i = 0; i < p.filas.length; i++) {
+        f = p.filas[i];
+        datos[f[0]] = {
+          seccion: f[0], clase: CL[f[1]] || 'sin dato', margen: f[2] / 1000,
+          listaNominal: f[3], votacion: f[4], target: f[5],
+          ganador: f[6] >= 0 ? p.partidos[f[6]] : '',
+          cveMun: f[7], distritoF: f[8],
+          tipo: ['Urbana','Mixta','Rural'][f[9]] || '',
+          municipio: vista.catalogo[f[7]] || '',
+          participacion: f[3] ? f[4] / f[3] : null,
+          colonias: '', nota: '', alerta: '', color: '', votos: []
+        };
+      }
+      return { datos: datos, total: p.filas.length, partidos: p.partidos };
+    });
+  }
+
+  /* ═══════════════ 2 · Mapa ═══════════════ */
+
+  function iniciaMapa() {
+    vista.lienzo = L.canvas({ padding: 0.5 });
+    vista.mapa = L.map($('#Anl-mapa-leaflet'), {
+      renderer: vista.lienzo, preferCanvas: true, zoomControl: true,
+      center: [20.55, -103.55], zoom: 8, minZoom: 6, maxZoom: 18,
+      attributionControl: true
+    });
+    L.control.scale({ imperial: false, position: 'bottomleft' }).addTo(vista.mapa);
+
+    vista.bases = {
+      osm: L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19, crossOrigin: true,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &middot; cartografia seccional INE'
+      }),
+      /* Esri World Imagery: mosaico satelital de uso libre con atribucion.
+         Llega a z19 en zona urbana; por encima se ve borroso, asi que el mapa
+         no pasa de 18 y no hay salto visible. */
+      satelite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19, crossOrigin: true,
+        attribution: 'Imagenes &copy; Esri, Maxar, Earthstar Geographics &middot; cartografia seccional INE'
+      })
+    };
+
+    var avisado = {};
+    Object.keys(vista.bases).forEach(function (k) {
+      var fallos = 0;
+      vista.bases[k].on('tileerror', function () {
+        fallos++;
+        if (fallos === 8 && !avisado[k] && vista.base === k) {
+          avisado[k] = true;
+          aviso('Sin conexion con la capa base (' + (k === 'osm' ? 'OpenStreetMap' : 'Esri') +
+                '): se muestran solo los limites de las secciones. El semaforo sigue siendo valido.', true);
+        }
+      });
+    });
+
+    vista.globo = L.tooltip({ sticky: true, direction: 'top', opacity: 1 });
+  }
+
+  /* Cambia la capa base. "ninguna" deja el semaforo sobre el fondo del tablero,
+     que es lo mas legible para leer solo el color. */
+  function ponBase(cual) {
+    if (!vista.mapa || !vista.bases) return;
+    Object.keys(vista.bases).forEach(function (k) {
+      if (vista.mapa.hasLayer(vista.bases[k])) vista.mapa.removeLayer(vista.bases[k]);
+    });
+    if (vista.bases[cual]) {
+      vista.bases[cual].addTo(vista.mapa);
+      vista.bases[cual].bringToBack();
+    }
+    vista.base = cual;
+    $('#Anl-mapa-leaflet').setAttribute('data-anl-base', cual);
+    var b = document.querySelectorAll('#Anl-mapa-seccional .Anl-mapa-opcion');
+    Array.prototype.forEach.call(b, function (n) {
+      n.setAttribute('aria-pressed', n.getAttribute('data-anl-base') === cual ? 'true' : 'false');
+    });
+    try { global.localStorage.setItem(CLAVE_BASE, cual); } catch (e) {}
+  }
+
+  function colorDe(d) {
+    if (!d) return COLOR.sinDato;
+    if (HOJA.usarColorHex && d.color && /^#[0-9a-fA-F]{6}$/.test(d.color)) return d.color;
+    return COLOR[d.clase] || COLOR.sinDato;
+  }
+
+  function visible(clave) {
+    var d = vista.datos[clave];
+    if (vista.filtroMun !== 'todos') {
+      var cm = d ? d.cveMun : null;
+      if (String(cm) !== String(vista.filtroMun)) return false;
+    }
+    if (vista.filtroEstatus !== 'todas') {
+      if (!d || d.clase !== vista.filtroEstatus) return false;
+    }
+    return true;
+  }
+
+  function estilo(clave) {
+    var d = vista.datos[clave], vis = visible(clave), activa = (vista.activa === clave);
+    return {
+      renderer: vista.lienzo,
+      color: activa ? COLOR.trazoActivo : COLOR.trazo,
+      weight: activa ? 2.2 : 0.5,
+      opacity: vis ? (activa ? 1 : 0.55) : 0.10,
+      fill: true,
+      fillColor: colorDe(d),
+      fillOpacity: vis ? vista.opacidad : 0.02
+    };
+  }
+
+  function pintaCapa() {
+    if (vista.capa) { vista.mapa.removeLayer(vista.capa); vista.capa = null; }
+    vista.porSeccion = Object.create(null);
+
+    vista.capa = L.geoJSON({ type: 'FeatureCollection', features: vista.rasgos }, {
+      style: function (f) { return estilo(f.properties.s); },
+      onEachFeature: function (f, capa) { vista.porSeccion[f.properties.s] = capa; }
+    });
+
+    vista.capa.on('mouseover', function (ev) {
+      var f = ev.layer && ev.layer.feature; if (!f) return;
+      var clave = f.properties.s, d = vista.datos[clave];
+      var txt = 'Seccion ' + clave;
+      if (d) {
+        txt += ' &middot; ' + (ETIQUETA[d.clase] || d.clase);
+        if (d.listaNominal) txt += '<br>Lista nominal ' + ent(d.listaNominal);
+        if (d.margen !== null && d.margen !== undefined) txt += ' &middot; margen ' + pct(d.margen);
+      } else {
+        txt += ' &middot; sin fila en la hoja';
+      }
+      vista.globo.setContent(txt).setLatLng(ev.latlng).addTo(vista.mapa);
+    });
+    vista.capa.on('mousemove', function (ev) { vista.globo.setLatLng(ev.latlng); });
+    vista.capa.on('mouseout', function () { vista.mapa.closeTooltip(vista.globo); });
+    vista.capa.on('click', function (ev) {
+      if (ev.layer && ev.layer.feature) selecciona(ev.layer.feature.properties.s);
+    });
+    vista.capa.addTo(vista.mapa);
+  }
+
+  function refrescaEstilos() {
+    var clave;
+    for (clave in vista.porSeccion) {
+      vista.porSeccion[clave].setStyle(estilo(clave));
+    }
+  }
+
+  function selecciona(clave) {
+    var anterior = vista.activa;
+    vista.activa = (vista.activa === clave) ? null : clave;
+    if (anterior && vista.porSeccion[anterior]) vista.porSeccion[anterior].setStyle(estilo(anterior));
+    if (vista.activa && vista.porSeccion[vista.activa]) {
+      vista.porSeccion[vista.activa].setStyle(estilo(vista.activa));
+      vista.porSeccion[vista.activa].bringToFront();
+    }
+    pintaFicha();
+  }
+
+  function fila(k, v) {
+    var li = document.createElement('li');
+    var a = document.createElement('span'); a.className = 'Anl-mapa-ficha-k'; a.textContent = k;
+    var b = document.createElement('span'); b.className = 'Anl-mapa-ficha-v'; b.textContent = v;
+    li.appendChild(a); li.appendChild(b);
+    return li;
+  }
+
+  function pintaFicha() {
+    var ficha = $('#Anl-mapa-ficha');
+    if (!vista.activa) { ficha.hidden = true; return; }
+    var clave = vista.activa, d = vista.datos[clave];
+    ficha.hidden = false;
+    $('#Anl-mapa-ficha-num').textContent = ('0000' + clave).slice(-4);
+
+    var lista = $('#Anl-mapa-ficha-lista');
+    lista.innerHTML = '';
+    if (!d) {
+      $('#Anl-mapa-ficha-mun').textContent = 'Sin fila en la hoja';
+      lista.appendChild(fila('Estatus', 'Sin dato'));
+      return;
+    }
+    $('#Anl-mapa-ficha-mun').textContent =
+      (d.municipio || vista.catalogo[d.cveMun] || '') +
+      (d.distritoF ? ' · Distrito federal ' + d.distritoF : '') +
+      (d.tipo ? ' · ' + d.tipo : '');
+
+    lista.appendChild(fila('Estatus', ETIQUETA[d.clase] || d.clase));
+    if (d.listaNominal) lista.appendChild(fila('Lista nominal', ent(d.listaNominal)));
+    if (d.votacion) lista.appendChild(fila('Votacion total', ent(d.votacion)));
+    if (d.participacion !== null && d.participacion !== undefined)
+      lista.appendChild(fila('Participacion', pct(d.participacion)));
+    if (d.ganador) lista.appendChild(fila('Ganador', d.ganador));
+    if (d.margen !== null && d.margen !== undefined)
+      lista.appendChild(fila('Margen', (d.margen > 0 ? '+' : '') + pct(d.margen)));
+    if (d.target) lista.appendChild(fila('Target', ent(d.target)));
+    if (d.colonias) lista.appendChild(fila('Colonias', d.colonias));
+    if (d.nota) lista.appendChild(fila('Nota', d.nota));
+    if (d.alerta) lista.appendChild(fila('Alerta', d.alerta));
+  }
+
+  /* ═══════════════ 3 · Interfaz ═══════════════ */
+
+  /* Un solo hueco para avisos, con prioridad explicita: el origen de los datos
+     manda sobre la capa base. Sin esto, un fallo de teselas que llega tarde
+     borra el aviso de "no se pudo leer el Google Sheet", que es el que el
+     usuario necesita ver para saber por que el mapa no esta en vivo. */
+  function aviso(html, secundario) {
+    var a = $('#Anl-mapa-aviso');
+    if (!html) { a.hidden = true; a.innerHTML = ''; a.removeAttribute('data-anl-clave'); return; }
+    if (secundario && !a.hidden) return;
+    a.hidden = false; a.innerHTML = html;
+    a.setAttribute('data-anl-clave', secundario ? 'base' : 'datos');
+  }
+
+  function capa(estado, texto) {
+    var c = $('#Anl-mapa-capa');
+    if (texto) $('#Anl-mapa-capa-texto').innerHTML = texto;
+    c.setAttribute('data-anl-estado', estado);
+  }
+
+  function cuentaVisibles() {
+    var n = 0, clave;
+    for (clave in vista.porSeccion) { if (visible(clave)) n++; }
+    return n;
+  }
+
+  function pintaConteo() {
+    var conDato = 0, clave;
+    for (clave in vista.porSeccion) { if (vista.datos[clave]) conDato++; }
+    $('#Anl-mapa-conteo').textContent =
+      ent(cuentaVisibles()) + ' secciones en la vista · ' +
+      ent(conDato) + (vista.origen === 'sheet' ? ' con fila en la hoja · ' : ' con dato de respaldo · ') +
+      ent(vista.rasgos.length) + ' en la cartografia';
+  }
+
+  function pintaMunicipios() {
+    var sel = $('#Anl-mapa-municipio');
+    var presentes = Object.create(null), clave, d;
+    for (clave in vista.datos) {
+      d = vista.datos[clave];
+      if (d.cveMun) presentes[d.cveMun] = d.municipio || vista.catalogo[d.cveMun] || ('Municipio ' + d.cveMun);
+    }
+    var claves = Object.keys(presentes).sort(function (a, b) {
+      return String(presentes[a]).localeCompare(String(presentes[b]), 'es');
+    });
+    sel.innerHTML = '';
+    var op = document.createElement('option');
+    op.value = 'todos'; op.textContent = 'Todo Jalisco (' + claves.length + ')';
+    sel.appendChild(op);
+    claves.forEach(function (k) {
+      var o = document.createElement('option');
+      o.value = k; o.textContent = presentes[k];
+      sel.appendChild(o);
+    });
+    sel.value = vista.filtroMun;
+  }
+
+  function limitesDe(pred) {
+    var b = null;
+    vista.rasgos.forEach(function (f) {
+      if (!pred(f.properties.s)) return;
+      var capa = vista.porSeccion[f.properties.s];
+      if (!capa) return;
+      var lb = capa.getBounds();
+      b = b ? b.extend(lb) : L.latLngBounds(lb.getSouthWest(), lb.getNorthEast());
+    });
+    return b;
+  }
+
+  function vuelaA(cveMun) {
+    var b = limitesDe(function (s) {
+      var d = vista.datos[s];
+      return d && String(d.cveMun) === String(cveMun);
+    });
+    if (b && b.isValid()) vista.mapa.flyToBounds(b, { padding: [40, 40], duration: 0.8 });
+  }
+
+  function conecta() {
+    var des = $('#Anl-mapa-opacidad'), val = $('#Anl-mapa-opacidad-valor');
+    try {
+      var g = global.localStorage.getItem(CLAVE_OPACIDAD);
+      if (g !== null && !isNaN(parseInt(g, 10))) { des.value = g; }
+    } catch (e) {}
+    vista.opacidad = parseInt(des.value, 10) / 100;
+    val.textContent = des.value + '%';
+
+    des.addEventListener('input', function () {
+      vista.opacidad = parseInt(des.value, 10) / 100;
+      val.textContent = des.value + '%';
+      refrescaEstilos();
+      try { global.localStorage.setItem(CLAVE_OPACIDAD, des.value); } catch (e) {}
+    });
+
+    $('#Anl-mapa-municipio').addEventListener('change', function () {
+      vista.filtroMun = this.value;
+      refrescaEstilos(); pintaConteo();
+      if (this.value === 'todos') {
+        vista.mapa.flyToBounds(limitesDe(function () { return true; }), { padding: [20, 20], duration: 0.8 });
+      } else { vuelaA(this.value); }
+    });
+
+    $('#Anl-mapa-estatus').addEventListener('change', function () {
+      vista.filtroEstatus = this.value;
+      refrescaEstilos(); pintaConteo();
+    });
+
+    $('#Anl-mapa-ficha-cerrar').addEventListener('click', function () {
+      if (vista.activa) selecciona(vista.activa);
+    });
+
+    $('#Anl-mapa-recargar').addEventListener('click', function () {
+      var b = this;
+      b.disabled = true; b.textContent = 'Leyendo…';
+      cargaHoja().then(function () {
+        b.disabled = false; b.textContent = 'Recargar hoja';
+      });
+    });
+
+    var botones = document.querySelectorAll('#Anl-mapa-seccional .Anl-mapa-opcion');
+    Array.prototype.forEach.call(botones, function (n) {
+      n.addEventListener('click', function () { ponBase(n.getAttribute('data-anl-base')); });
+    });
+  }
+
+  /* ═══════════════ 4 · Carga ═══════════════ */
+
+  function aplica(paquete, origen, nota) {
+    vista.datos = paquete.datos;
+    vista.partidos = paquete.partidos || [];
+    vista.origen = origen;
+    pintaMunicipios();
+    if (vista.capa) { refrescaEstilos(); } else { pintaCapa(); }
+    pintaConteo();
+    if (vista.activa) pintaFicha();
+    $('#Anl-mapa-fuente').innerHTML = nota;
+    $('#Anl-mapa-corte').textContent =
+      'Ultima lectura ' + new Date().toLocaleString('es-MX', { dateStyle: 'medium', timeStyle: 'short' });
+  }
+
+  function cargaHoja() {
+    return traeCSV(HOJA.gid_secciones, HOJA.publicada_secciones)
+      .then(function (res) {
+        var paquete = indexa(leeCSV(res.texto));
+        if (!paquete) throw new Error('formato');
+        aviso('');
+        aplica(paquete, 'sheet',
+          'Cartografia seccional del INE (4,080 secciones, auditada). ' +
+          'Coloreado en vivo desde el Google Sheet: edita la hoja y pulsa «Recargar hoja».');
+        return paquete;
+      })
+      .catch(function () {
+        return respaldoIncrustado().then(function (paquete) {
+          aviso('<strong>No se pudo leer el Google Sheet desde el navegador.</strong> ' +
+                'Se muestra la instantanea incrustada del libro original. ' +
+                'Para leer la hoja en vivo: <em>Archivo &rarr; Compartir &rarr; Publicar en la web ' +
+                '&rarr; hoja SECCIONES &rarr; CSV</em>, y pega esa URL en <code>HOJA.publicada_secciones</code>. ' +
+                'Es el unico origen que manda cabeceras CORS de forma fiable.');
+          aplica(paquete, 'respaldo',
+            'Cartografia seccional del INE (4,080 secciones, auditada). ' +
+            'Coloreado con la instantanea incrustada, no con la hoja en vivo.');
+          return paquete;
+        });
+      });
+  }
+
+  function arranca() {
+    if (vista.iniciado) return;
+    vista.iniciado = true;
+    try { vista.catalogo = JSON.parse(global.Dip_MAPA_CATALOGO || '{}'); } catch (e) { vista.catalogo = {}; }
+    conecta();
+    iniciaMapa();
+
+    var guardada = null;
+    try { guardada = global.localStorage.getItem(CLAVE_BASE); } catch (e) {}
+    ponBase(guardada && (guardada in vista.bases || guardada === 'ninguna') ? guardada : 'osm');
+
+    capa('cargando', 'Descomprimiendo la cartografia de las 4,080 secciones&hellip;');
+    descomprime(global.Dip_MAPA_CARTOGRAFIA_GZ)
+      .then(function (topo) {
+        var nombre = Object.keys(topo.objects)[0];
+        vista.rasgos = topojson.feature(topo, topo.objects[nombre]).features;
+        capa('cargando', 'Leyendo el Google Sheet&hellip;');
+        return cargaHoja();
+      })
+      .then(function () {
+        capa('listo');
+        vista.mapa.invalidateSize();
+        var b = limitesDe(function () { return true; });
+        if (b && b.isValid()) vista.mapa.fitBounds(b, { padding: [20, 20] });
+        vista.encuadrado = vista.mapa.getSize().x > 50;
+        global.Anl_MAPA = {
+          mapa: vista.mapa, recargar: cargaHoja,
+          ir: function (s) { selecciona(s); vuelaASeccion(s); },
+          estado: vista
+        };
+        sigueAlNucleo();
+      })
+      .catch(function (err) {
+        capa('error', 'No fue posible dibujar el mapa: ' + (err && err.message ? err.message : err));
+        $('#Anl-mapa-capa').querySelector('.Anl-mapa-hilo').style.display = 'none';
+      });
+  }
+
+  function vuelaASeccion(s) {
+    var capaS = vista.porSeccion[s];
+    if (capaS) vista.mapa.flyToBounds(capaS.getBounds(), { padding: [60, 60], maxZoom: 16, duration: 0.8 });
+  }
+
+  /* El mapa obedece al selector de territorio del tablero: lectura, nunca
+     escritura. Mismo sondeo que usa la Fase 2 para no tocar el nucleo. */
+  /* F4 · El Mapa de Análisis NO sigue al tablero.
+     El original copia, por sondeo cada 600 ms, el municipio elegido en
+     «Análisis de Candidatos». Aquí esa función se retira entera —no
+     basta con no llamarla— para que este módulo no tenga una sola
+     referencia al núcleo de Dip. Se gobierna con su propio selector. */
+  function sigueAlNucleo() { return; }
+
+  global.AnlMapa = {
+    /* Repintar = volver a pedir el estilo de cada polígono. `estilo()`
+       lee COLOR, que es un objeto vivo, así que el nuevo tema entra
+       sin reconstruir la capa. */
+    repintar: function () { try { refrescaEstilos(); pintaConteo(); } catch (e) {} },
+    /* Leaflet mide su contenedor al crearse. Creado dentro de un panel
+       oculto, mide 0: hay que avisarle cuando su pestaña se muestra. */
+    remedir: function () {
+      try {
+        if (!vista.mapa) return;
+        vista.mapa.invalidateSize();
+        /* La primera vez que el panel se hace visible no basta con
+           remedir: hay que REENCUADRAR. Si el mapa nacio oculto, su
+           contenedor medIa 0 px y el fitBounds del arranque calculo un
+           zoom sin sentido — el mapa se veIa como un bloque de color
+           macizo. Despues no se vuelve a tocar, para no deshacer el
+           encuadre que el usuario haya elegido. */
+        if (!vista.encuadrado) {
+          var b = limitesDe(function () { return true; });
+          if (b && b.isValid()) {
+            vista.mapa.fitBounds(b, { padding: [20, 20] });
+            vista.encuadrado = true;
+          }
+        }
+      } catch (e) {}
+    }
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arranca);
@@ -10336,6 +11854,36 @@ window.Dip_MAPA_CATALOGO = "{\"1\":\"ACATIC\",\"2\":\"ACATLAN DE JUAREZ\",\"3\":
      su propio observador de tamaño recoloca la barra. Pero sí conviene
      un `resize` al mostrarla, porque su matriz de calor mide columnas. */
   global.CxShell.alMostrar('Elec', function () {
+    global.dispatchEvent(new Event('resize'));
+  });
+
+  /* Las otras dos vistas de la familia Dip comparten su panel, así que
+     heredan el mismo trato al mostrarse. */
+  ['DiaD', 'Redes'].forEach(function (v) {
+    global.CxShell.alMostrar(v, function () {
+      if (pendienteTema) { pendienteTema = false; repintaDip(); }
+      global.dispatchEvent(new Event('resize'));
+    });
+  });
+
+  /* F4 · El Mapa de Análisis necesita su propio aviso. Sin él, Leaflet
+     conserva la medida que tenía su contenedor cuando el panel estaba
+     oculto y el mapa desborda la página al cambiar de tamaño de ventana:
+     la prueba lo detectó como un desbordamiento lateral de hasta 391 px. */
+  var temaPendienteAnl = false;
+  global.CxShell.alCambiarTema(function () {
+    if (global.CxShell.activa('Anl')) {
+      if (global.AnlMapa && global.AnlMapa.repintar) global.AnlMapa.repintar();
+    } else {
+      temaPendienteAnl = true;
+    }
+  });
+  global.CxShell.alMostrar('Anl', function () {
+    if (global.AnlMapa && global.AnlMapa.remedir) global.AnlMapa.remedir();
+    if (temaPendienteAnl) {
+      temaPendienteAnl = false;
+      if (global.AnlMapa && global.AnlMapa.repintar) global.AnlMapa.repintar();
+    }
     global.dispatchEvent(new Event('resize'));
   });
 })(window);
