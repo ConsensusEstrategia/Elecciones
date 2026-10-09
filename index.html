@@ -3400,9 +3400,317 @@ html[data-tema="oscuro"]{
 <style>
 /* =================================================================
    MÓDULO D10Z_ · Distrito 10 Zapopan (local y federal) · 2026-10-09.Z1
-   Hoja encapsulada en #D10Z_app. Chart.js 4.4.3 y Leaflet 1.9.4 se
-   comparten con el resto de la página: no se incrustan otra vez.
+   Hoja encapsulada en #D10Z_app. El JS de Chart.js 4.4.3 y Leaflet 1.9.4
+   se comparte con la página; la hoja de Leaflet va aquí encapsulada,
+   porque la del índice vive bajo #Dip-app y no alcanza a este módulo.
    ================================================================= */
+/* Leaflet 1.9.4 (BSD-2-Clause) — hoja original encapsulada bajo #D10Z_app */
+#D10Z_app .leaflet-pane, #D10Z_app .leaflet-tile, #D10Z_app .leaflet-marker-icon, #D10Z_app .leaflet-marker-shadow, #D10Z_app .leaflet-tile-container, #D10Z_app .leaflet-pane > svg, #D10Z_app .leaflet-pane > canvas, #D10Z_app .leaflet-zoom-box, #D10Z_app .leaflet-image-layer, #D10Z_app .leaflet-layer{position: absolute;
+	left: 0;
+	top: 0;}
+#D10Z_app .leaflet-container{overflow: hidden;}
+#D10Z_app .leaflet-tile, #D10Z_app .leaflet-marker-icon, #D10Z_app .leaflet-marker-shadow{-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+	  -webkit-user-drag: none;}
+#D10Z_app .leaflet-tile::selection{background: transparent;}
+#D10Z_app .leaflet-safari .leaflet-tile{image-rendering: -webkit-optimize-contrast;}
+#D10Z_app .leaflet-safari .leaflet-tile-container{width: 1600px;
+	height: 1600px;
+	-webkit-transform-origin: 0 0;}
+#D10Z_app .leaflet-marker-icon, #D10Z_app .leaflet-marker-shadow{display: block;}
+#D10Z_app .leaflet-container .leaflet-overlay-pane svg{max-width: none !important;
+	max-height: none !important;}
+#D10Z_app .leaflet-container .leaflet-marker-pane img, #D10Z_app .leaflet-container .leaflet-shadow-pane img, #D10Z_app .leaflet-container .leaflet-tile-pane img, #D10Z_app .leaflet-container img.leaflet-image-layer, #D10Z_app .leaflet-container .leaflet-tile{max-width: none !important;
+	max-height: none !important;
+	width: auto;
+	padding: 0;}
+#D10Z_app .leaflet-container img.leaflet-tile{mix-blend-mode: plus-lighter;}
+#D10Z_app .leaflet-container.leaflet-touch-zoom{-ms-touch-action: pan-x pan-y;
+	touch-action: pan-x pan-y;}
+#D10Z_app .leaflet-container.leaflet-touch-drag{-ms-touch-action: pinch-zoom;
+	
+	touch-action: none;
+	touch-action: pinch-zoom;}
+#D10Z_app .leaflet-container.leaflet-touch-drag.leaflet-touch-zoom{-ms-touch-action: none;
+	touch-action: none;}
+#D10Z_app .leaflet-container{-webkit-tap-highlight-color: transparent;}
+#D10Z_app .leaflet-container a{-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);}
+#D10Z_app .leaflet-tile{filter: inherit;
+	visibility: hidden;}
+#D10Z_app .leaflet-tile-loaded{visibility: inherit;}
+#D10Z_app .leaflet-zoom-box{width: 0;
+	height: 0;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	z-index: 800;}
+#D10Z_app .leaflet-overlay-pane svg{-moz-user-select: none;}
+#D10Z_app .leaflet-pane{z-index: 400;}
+#D10Z_app .leaflet-tile-pane{z-index: 200;}
+#D10Z_app .leaflet-overlay-pane{z-index: 400;}
+#D10Z_app .leaflet-shadow-pane{z-index: 500;}
+#D10Z_app .leaflet-marker-pane{z-index: 600;}
+#D10Z_app .leaflet-tooltip-pane{z-index: 650;}
+#D10Z_app .leaflet-popup-pane{z-index: 700;}
+#D10Z_app .leaflet-map-pane canvas{z-index: 100;}
+#D10Z_app .leaflet-map-pane svg{z-index: 200;}
+#D10Z_app .leaflet-vml-shape{width: 1px;
+	height: 1px;}
+#D10Z_app .lvml{behavior: url(#default#VML);
+	display: inline-block;
+	position: absolute;}
+#D10Z_app .leaflet-control{position: relative;
+	z-index: 800;
+	pointer-events: visiblePainted; 
+	pointer-events: auto;}
+#D10Z_app .leaflet-top, #D10Z_app .leaflet-bottom{position: absolute;
+	z-index: 1000;
+	pointer-events: none;}
+#D10Z_app .leaflet-top{top: 0;}
+#D10Z_app .leaflet-right{right: 0;}
+#D10Z_app .leaflet-bottom{bottom: 0;}
+#D10Z_app .leaflet-left{left: 0;}
+#D10Z_app .leaflet-control{float: left;
+	clear: both;}
+#D10Z_app .leaflet-right .leaflet-control{float: right;}
+#D10Z_app .leaflet-top .leaflet-control{margin-top: 10px;}
+#D10Z_app .leaflet-bottom .leaflet-control{margin-bottom: 10px;}
+#D10Z_app .leaflet-left .leaflet-control{margin-left: 10px;}
+#D10Z_app .leaflet-right .leaflet-control{margin-right: 10px;}
+#D10Z_app .leaflet-fade-anim .leaflet-popup{opacity: 0;
+	-webkit-transition: opacity 0.2s linear;
+	   -moz-transition: opacity 0.2s linear;
+	        transition: opacity 0.2s linear;}
+#D10Z_app .leaflet-fade-anim .leaflet-map-pane .leaflet-popup{opacity: 1;}
+#D10Z_app .leaflet-zoom-animated{-webkit-transform-origin: 0 0;
+	    -ms-transform-origin: 0 0;
+	        transform-origin: 0 0;}
+#D10Z_app svg.leaflet-zoom-animated{will-change: transform;}
+#D10Z_app .leaflet-zoom-anim .leaflet-zoom-animated{-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
+	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);}
+#D10Z_app .leaflet-zoom-anim .leaflet-tile, #D10Z_app .leaflet-pan-anim .leaflet-tile{-webkit-transition: none;
+	   -moz-transition: none;
+	        transition: none;}
+#D10Z_app .leaflet-zoom-anim .leaflet-zoom-hide{visibility: hidden;}
+#D10Z_app .leaflet-interactive{cursor: pointer;}
+#D10Z_app .leaflet-grab{cursor: -webkit-grab;
+	cursor:    -moz-grab;
+	cursor:         grab;}
+#D10Z_app .leaflet-crosshair, #D10Z_app .leaflet-crosshair .leaflet-interactive{cursor: crosshair;}
+#D10Z_app .leaflet-popup-pane, #D10Z_app .leaflet-control{cursor: auto;}
+#D10Z_app .leaflet-dragging .leaflet-grab, #D10Z_app .leaflet-dragging .leaflet-grab .leaflet-interactive, #D10Z_app .leaflet-dragging .leaflet-marker-draggable{cursor: move;
+	cursor: -webkit-grabbing;
+	cursor:    -moz-grabbing;
+	cursor:         grabbing;}
+#D10Z_app .leaflet-marker-icon, #D10Z_app .leaflet-marker-shadow, #D10Z_app .leaflet-image-layer, #D10Z_app .leaflet-pane > svg path, #D10Z_app .leaflet-tile-container{pointer-events: none;}
+#D10Z_app .leaflet-marker-icon.leaflet-interactive, #D10Z_app .leaflet-image-layer.leaflet-interactive, #D10Z_app .leaflet-pane > svg path.leaflet-interactive, #D10Z_app svg.leaflet-image-layer.leaflet-interactive path{pointer-events: visiblePainted; 
+	pointer-events: auto;}
+#D10Z_app .leaflet-container{background: #ddd;
+	outline-offset: 1px;}
+#D10Z_app .leaflet-container a{color: #0078A8;}
+#D10Z_app .leaflet-zoom-box{border: 2px dotted #38f;
+	background: rgba(255,255,255,0.5);}
+#D10Z_app .leaflet-container{font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-size: 0.75rem;
+	line-height: 1.5;}
+#D10Z_app .leaflet-bar{box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	border-radius: 4px;}
+#D10Z_app .leaflet-bar a{background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: black;}
+#D10Z_app .leaflet-bar a, #D10Z_app .leaflet-control-layers-toggle{background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;}
+#D10Z_app .leaflet-bar a:hover, #D10Z_app .leaflet-bar a:focus{background-color: #f4f4f4;}
+#D10Z_app .leaflet-bar a:first-child{border-top-left-radius: 4px;
+	border-top-right-radius: 4px;}
+#D10Z_app .leaflet-bar a:last-child{border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom: none;}
+#D10Z_app .leaflet-bar a.leaflet-disabled{cursor: default;
+	background-color: #f4f4f4;
+	color: #bbb;}
+#D10Z_app .leaflet-touch .leaflet-bar a{width: 30px;
+	height: 30px;
+	line-height: 30px;}
+#D10Z_app .leaflet-touch .leaflet-bar a:first-child{border-top-left-radius: 2px;
+	border-top-right-radius: 2px;}
+#D10Z_app .leaflet-touch .leaflet-bar a:last-child{border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;}
+#D10Z_app .leaflet-control-zoom-in, #D10Z_app .leaflet-control-zoom-out{font: bold 18px 'Lucida Console', Monaco, monospace;
+	text-indent: 1px;}
+#D10Z_app .leaflet-touch .leaflet-control-zoom-in, #D10Z_app .leaflet-touch .leaflet-control-zoom-out{font-size: 22px;}
+#D10Z_app .leaflet-control-layers{box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	background: #fff;
+	border-radius: 5px;}
+#D10Z_app .leaflet-control-layers-toggle{background-image: url(images/layers.png);
+	width: 36px;
+	height: 36px;}
+#D10Z_app .leaflet-retina .leaflet-control-layers-toggle{background-image: url(images/layers-2x.png);
+	background-size: 26px 26px;}
+#D10Z_app .leaflet-touch .leaflet-control-layers-toggle{width: 44px;
+	height: 44px;}
+#D10Z_app .leaflet-control-layers .leaflet-control-layers-list, #D10Z_app .leaflet-control-layers-expanded .leaflet-control-layers-toggle{display: none;}
+#D10Z_app .leaflet-control-layers-expanded .leaflet-control-layers-list{display: block;
+	position: relative;}
+#D10Z_app .leaflet-control-layers-expanded{padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;}
+#D10Z_app .leaflet-control-layers-scrollbar{overflow-y: scroll;
+	overflow-x: hidden;
+	padding-right: 5px;}
+#D10Z_app .leaflet-control-layers-selector{margin-top: 2px;
+	position: relative;
+	top: 1px;}
+#D10Z_app .leaflet-control-layers label{display: block;
+	font-size: 13px;
+	font-size: 1.08333em;}
+#D10Z_app .leaflet-control-layers-separator{height: 0;
+	border-top: 1px solid #ddd;
+	margin: 5px -10px 5px -6px;}
+#D10Z_app .leaflet-default-icon-path{background-image: url(images/marker-icon.png);}
+#D10Z_app .leaflet-container .leaflet-control-attribution{background: #fff;
+	background: rgba(255, 255, 255, 0.8);
+	margin: 0;}
+#D10Z_app .leaflet-control-attribution, #D10Z_app .leaflet-control-scale-line{padding: 0 5px;
+	color: #333;
+	line-height: 1.4;}
+#D10Z_app .leaflet-control-attribution a{text-decoration: none;}
+#D10Z_app .leaflet-control-attribution a:hover, #D10Z_app .leaflet-control-attribution a:focus{text-decoration: underline;}
+#D10Z_app .leaflet-attribution-flag{display: inline !important;
+	vertical-align: baseline !important;
+	width: 1em;
+	height: 0.6669em;}
+#D10Z_app .leaflet-left .leaflet-control-scale{margin-left: 5px;}
+#D10Z_app .leaflet-bottom .leaflet-control-scale{margin-bottom: 5px;}
+#D10Z_app .leaflet-control-scale-line{border: 2px solid #777;
+	border-top: none;
+	line-height: 1.1;
+	padding: 2px 5px 1px;
+	white-space: nowrap;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.8);
+	text-shadow: 1px 1px #fff;}
+#D10Z_app .leaflet-control-scale-line:not(:first-child){border-top: 2px solid #777;
+	border-bottom: none;
+	margin-top: -2px;}
+#D10Z_app .leaflet-control-scale-line:not(:first-child):not(:last-child){border-bottom: 2px solid #777;}
+#D10Z_app .leaflet-touch .leaflet-control-attribution, #D10Z_app .leaflet-touch .leaflet-control-layers, #D10Z_app .leaflet-touch .leaflet-bar{box-shadow: none;}
+#D10Z_app .leaflet-touch .leaflet-control-layers, #D10Z_app .leaflet-touch .leaflet-bar{border: 2px solid rgba(0,0,0,0.2);
+	background-clip: padding-box;}
+#D10Z_app .leaflet-popup{position: absolute;
+	text-align: center;
+	margin-bottom: 20px;}
+#D10Z_app .leaflet-popup-content-wrapper{padding: 1px;
+	text-align: left;
+	border-radius: 12px;}
+#D10Z_app .leaflet-popup-content{margin: 13px 24px 13px 20px;
+	line-height: 1.3;
+	font-size: 13px;
+	font-size: 1.08333em;
+	min-height: 1px;}
+#D10Z_app .leaflet-popup-content p{margin: 17px 0;
+	margin: 1.3em 0;}
+#D10Z_app .leaflet-popup-tip-container{width: 40px;
+	height: 20px;
+	position: absolute;
+	left: 50%;
+	margin-top: -1px;
+	margin-left: -20px;
+	overflow: hidden;
+	pointer-events: none;}
+#D10Z_app .leaflet-popup-tip{width: 17px;
+	height: 17px;
+	padding: 1px;
+
+	margin: -10px auto 0;
+	pointer-events: auto;
+
+	-webkit-transform: rotate(45deg);
+	   -moz-transform: rotate(45deg);
+	    -ms-transform: rotate(45deg);
+	        transform: rotate(45deg);}
+#D10Z_app .leaflet-popup-content-wrapper, #D10Z_app .leaflet-popup-tip{background: white;
+	color: #333;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);}
+#D10Z_app .leaflet-container a.leaflet-popup-close-button{position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	text-align: center;
+	width: 24px;
+	height: 24px;
+	font: 16px/24px Tahoma, Verdana, sans-serif;
+	color: #757575;
+	text-decoration: none;
+	background: transparent;}
+#D10Z_app .leaflet-container a.leaflet-popup-close-button:hover, #D10Z_app .leaflet-container a.leaflet-popup-close-button:focus{color: #585858;}
+#D10Z_app .leaflet-popup-scrolled{overflow: auto;}
+#D10Z_app .leaflet-oldie .leaflet-popup-content-wrapper{-ms-zoom: 1;}
+#D10Z_app .leaflet-oldie .leaflet-popup-tip{width: 24px;
+	margin: 0 auto;
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);}
+#D10Z_app .leaflet-oldie .leaflet-control-zoom, #D10Z_app .leaflet-oldie .leaflet-control-layers, #D10Z_app .leaflet-oldie .leaflet-popup-content-wrapper, #D10Z_app .leaflet-oldie .leaflet-popup-tip{border: 1px solid #999;}
+#D10Z_app .leaflet-div-icon{background: #fff;
+	border: 1px solid #666;}
+#D10Z_app .leaflet-tooltip{position: absolute;
+	padding: 6px;
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	color: #222;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.4);}
+#D10Z_app .leaflet-tooltip.leaflet-interactive{cursor: pointer;
+	pointer-events: auto;}
+#D10Z_app .leaflet-tooltip-top:before, #D10Z_app .leaflet-tooltip-bottom:before, #D10Z_app .leaflet-tooltip-left:before, #D10Z_app .leaflet-tooltip-right:before{position: absolute;
+	pointer-events: none;
+	border: 6px solid transparent;
+	background: transparent;
+	content: "";}
+#D10Z_app .leaflet-tooltip-bottom{margin-top: 6px;}
+#D10Z_app .leaflet-tooltip-top{margin-top: -6px;}
+#D10Z_app .leaflet-tooltip-bottom:before, #D10Z_app .leaflet-tooltip-top:before{left: 50%;
+	margin-left: -6px;}
+#D10Z_app .leaflet-tooltip-top:before{bottom: 0;
+	margin-bottom: -12px;
+	border-top-color: #fff;}
+#D10Z_app .leaflet-tooltip-bottom:before{top: 0;
+	margin-top: -12px;
+	margin-left: -6px;
+	border-bottom-color: #fff;}
+#D10Z_app .leaflet-tooltip-left{margin-left: -6px;}
+#D10Z_app .leaflet-tooltip-right{margin-left: 6px;}
+#D10Z_app .leaflet-tooltip-left:before, #D10Z_app .leaflet-tooltip-right:before{top: 50%;
+	margin-top: -6px;}
+#D10Z_app .leaflet-tooltip-left:before{right: 0;
+	margin-right: -12px;
+	border-left-color: #fff;}
+#D10Z_app .leaflet-tooltip-right:before{left: 0;
+	margin-left: -12px;
+	border-right-color: #fff;}
+@media print{#D10Z_app .leaflet-control{-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;}
+
+	}
+
+
 /* =====================================================================
    D10Z_ · Distrito 10 Zapopan. Hoja encapsulada: todo selector va bajo
    #D10Z_app, salvo los bloques que solo declaran variables (ya prefijadas)
