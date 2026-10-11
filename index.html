@@ -9,8 +9,8 @@
 
 <!-- Sellos de compilación. El de la fusión es nuevo; los de los módulos se
      conservan porque sus scripts comparan contra ellos. -->
-<meta name="Consensus-version" content="2026-10-10.F8">
-<meta name="D10Z_version" content="2026-10-10.Z3">
+<meta name="Consensus-version" content="2026-10-11.F9">
+<meta name="D10Z_version" content="2026-10-11.Z4">
 <meta name="Elec-version" content="2026-09-25.S2">
 <meta name="Dip-version" content="2026-09-27.D3-mapa">
 
@@ -3399,7 +3399,7 @@ html[data-tema="oscuro"]{
 </style>
 <style>
 /* =================================================================
-   MÓDULO D10Z_ · Distrito 10 Zapopan (local y federal) · 2026-10-10.Z3
+   MÓDULO D10Z_ · Distrito 10 Zapopan (local y federal) · 2026-10-11.Z4
    Hoja encapsulada en #D10Z_app. El JS de Chart.js 4.4.3 y Leaflet 1.9.4
    se comparte con la página; la hoja de Leaflet va aquí encapsulada,
    porque la del índice vive bajo #Dip-app y no alcanza a este módulo.
@@ -5300,6 +5300,65 @@ h2 > .Prov_sello, h3 > .Prov_sello, h4 > .Prov_sello, th > .Prov_sello{
 #Estr_app .Estr_meta{margin:8px 0 4px}#Estr_app .Estr_leyenda .CxM-ley{max-width:none}
 #Estr_app .Estr_leyenda .CxM-ley{flex:1 1 100%}
 
+/* ===== F9 · Meta resaltada en amarillo (fichas y globos de los 4 mapas) =====
+   Amarillo #FFE45C con tinta #1B1B1B: contraste 14:1, igual en tema claro y oscuro. */
+.Cx-meta-fila{background:#FFE45C!important;border-radius:6px;padding:4px 8px!important;margin:3px -8px!important;border-bottom-color:transparent!important}
+.Cx-meta-fila span{color:#1B1B1B!important;font-weight:600}
+.Cx-meta-tip{display:inline-block;background:#FFE45C;color:#1B1B1B!important;padding:1px 6px;border-radius:4px;margin-top:3px;font-weight:600;line-height:1.35}
+#D10Z_app .D10Z_ficha dt.Cx-meta-dt,#D10Z_app .D10Z_ficha dd.Cx-meta-dd{background:#FFE45C;color:#1B1B1B;font-weight:600;padding:4px 8px;margin:0}
+#D10Z_app .D10Z_ficha dt.Cx-meta-dt{border-radius:6px 0 0 6px;margin-left:-8px}
+#D10Z_app .D10Z_ficha dd.Cx-meta-dd{border-radius:0 6px 6px 0;margin-right:-8px}
+#D10Z_app .D10Z_ficha dl{column-gap:0}
+#D10Z_app .D10Z_ficha dt{padding-right:12px}
+#D10Z_app p.Cx-meta-p{background:#FFE45C;color:#1B1B1B;border-radius:6px;padding:6px 10px!important}
+#D10Z_app p.Cx-meta-p b{color:#1B1B1B}
+
+/* ===== F9 · Ficha de los mapas estatales: nunca rebasa el mapa ===== */
+#Anl-app .Anl-mapa-ficha,#Dip-app .Dip-mapa-ficha{max-height:calc(100% - 28px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;box-sizing:border-box}
+@media (max-width:720px){#Anl-app .Anl-mapa-ficha,#Dip-app .Dip-mapa-ficha{max-height:none;overflow:visible}}
+
+/* ===== F9 · Globo propio del mapa del Plan operativo ===== */
+#Estr_app .Estr_mapa{position:relative}
+#Estr_app .Estr_tip{position:absolute;z-index:5;pointer-events:none;max-width:280px;background:#FFFFFF;color:#1B1B1B;border:1px solid #9EAE99;border-radius:8px;padding:7px 10px;font:500 12.5px/1.45 Inter,system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+html[data-tema="oscuro"] #Estr_app .Estr_tip{background:#1C2420;color:#E8ECE6;border-color:#4E5650}
+#Estr_app .Estr_tip[hidden]{display:none}
+
+/* ===== F9 · Distrito 10 › Mapa: filtros en una sola línea ===== */
+#D10Z_app .D10Z_barra-mapa{flex-wrap:nowrap;align-items:center;gap:8px 14px;margin:10px 0 2px}
+#D10Z_app .D10Z_barra-mapa .D10Z_campo-l{flex-direction:row;align-items:center;gap:7px;flex:0 1 auto;white-space:nowrap}
+#D10Z_app .D10Z_barra-mapa .D10Z_campo-l input[type=search]{width:176px;min-height:36px;padding:6px 9px}
+#D10Z_app .D10Z_barra-mapa .D10Z_campo-l select{min-height:36px;padding:6px 8px;width:auto;max-width:205px}
+#D10Z_app .D10Z_barra-mapa .D10Z_btn{min-height:36px;padding:6px 11px;white-space:nowrap}
+#D10Z_app .D10Z_barra-mapa .D10Z_btn-x{padding:6px 10px;font-size:17px;line-height:1}
+#D10Z_app .D10Z_barra-mapa #D10Z_meta-sec{flex:0 0 auto}
+#D10Z_app .D10Z_barra-mapa .CxM{flex-wrap:nowrap;gap:6px;color:var(--D10Z_tinta2)}
+#D10Z_app .D10Z_barra-mapa .CxM-t{font-size:12px;letter-spacing:.02em;text-transform:none;color:var(--D10Z_tinta2)}
+#D10Z_app .D10Z_barra-mapa .CxM select{height:36px;background:var(--D10Z_lienzo);border-color:var(--D10Z_filete);color:var(--D10Z_tinta)}
+#D10Z_app .D10Z_barra-mapa .CxM input{width:70px;height:36px;background:var(--D10Z_lienzo);border-color:var(--D10Z_filete);color:var(--D10Z_tinta)}
+#D10Z_app .D10Z_barra-mapa .CxM-u{display:none}
+#D10Z_app .D10Z_transp input[type=range]{width:92px;accent-color:var(--D10Z_ok);margin:0}
+#D10Z_app .D10Z_transp output{min-width:34px;font-variant-numeric:tabular-nums;color:var(--D10Z_tinta);font-weight:600}
+#D10Z_app .D10Z_btn-pdf{margin-left:auto;border-color:var(--D10Z_ok);box-shadow:inset 0 0 0 1px var(--D10Z_ok)}
+#D10Z_app .D10Z_btn-pdf:disabled{opacity:.7;cursor:progress}
+#D10Z_app .D10Z_busca-msg{margin:2px 0 10px;min-height:18px}
+@media (max-width:1240px){#D10Z_app .D10Z_barra-mapa{flex-wrap:wrap}#D10Z_app .D10Z_btn-pdf{margin-left:0}}
+@media (max-width:560px){
+  #D10Z_app .D10Z_barra-mapa .D10Z_campo-l{flex:1 1 100%}
+  #D10Z_app .D10Z_barra-mapa .D10Z_campo-l:first-child{flex:1 1 55%}
+  #D10Z_app .D10Z_barra-mapa .D10Z_campo-l input[type=search],#D10Z_app .D10Z_barra-mapa .D10Z_campo-l select{flex:1 1 auto;width:auto;max-width:none;min-width:0}
+  #D10Z_app .D10Z_barra-mapa .CxM{flex-wrap:wrap}
+  #D10Z_app .D10Z_transp input[type=range]{flex:1 1 auto}
+}
+
+/* ===== F9 · Captura de la hoja PDF de Distrito 10 ===== */
+.D10Z_pdf-fuera{display:none!important}
+body.D10Z_pdf-cap #D10Z_app .D10Z_tabla-env{max-height:none!important;overflow:visible!important}
+body.D10Z_pdf-cap #D10Z_app thead th{position:static!important}
+body.D10Z_pdf-cap #D10Z_app .D10Z_herr:not(.D10Z_barra-mapa) label,body.D10Z_pdf-cap #D10Z_app .D10Z_herr:not(.D10Z_barra-mapa) button{display:none!important}
+/* en pantallas angostas la captura conserva el resumen en tres columnas, como en escritorio */
+body.D10Z_pdf-cap #D10Z_app .D10Z_res-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) minmax(0,1fr)!important}
+body.D10Z_pdf-cap #D10Z_app .D10Z_res-col + .D10Z_res-col{border-left:1px solid var(--D10Z_filete)!important;padding-left:18px!important;border-top:0!important;padding-top:0!important}
+
 </style>
 </head>
 
@@ -6566,18 +6625,15 @@ h2 > .Prov_sello, h3 > .Prov_sello, h4 > .Prov_sello, th > .Prov_sello{
       <div class="D10Z_panel">
         <h2>Mapa seccional de Zapopan</h2>
         <p class="D10Z_nota">El Distrito 10 va coloreado y con borde grueso; los distritos 4, 6 y 12 quedan en gris como contexto. Cartografía seccional incrustada en la página Electoral (marco geográfico posterior a 2024). Las teselas de OpenStreetMap requieren conexión; sin ella se ven solo los polígonos.</p>
-        <div class="D10Z_herr">
-          <label class="D10Z_campo">Buscar sección
-            <input type="search" id="D10Z_busca-sec" list="D10Z_lista-sec" placeholder="Número de sección o colonia" autocomplete="off">
+        <div class="D10Z_herr D10Z_barra-mapa" role="group" aria-label="Filtros del mapa">
+          <label class="D10Z_campo D10Z_campo-l">Buscar
+            <input type="search" id="D10Z_busca-sec" list="D10Z_lista-sec" placeholder="Sección o colonia" autocomplete="off">
             <datalist id="D10Z_lista-sec"></datalist>
           </label>
           <button type="button" class="D10Z_btn" id="D10Z_btn-ir">Ir</button>
-          <button type="button" class="D10Z_btn" id="D10Z_btn-limpia" hidden>Quitar marca</button>
-          <span class="D10Z_cuenta" id="D10Z_busca-msg" role="status"></span>
-        </div>
-        <div class="D10Z_herr" id="D10Z_meta-fila"><div id="D10Z_meta-sec"></div></div>
-        <div class="D10Z_herr">
-          <label class="D10Z_campo">Capa
+          <button type="button" class="D10Z_btn D10Z_btn-x" id="D10Z_btn-limpia" hidden aria-label="Quitar marca" title="Quitar marca">&times;</button>
+          <div id="D10Z_meta-sec"></div>
+          <label class="D10Z_campo D10Z_campo-l">Capa
             <select id="D10Z_sel-capa">
               <option value="meta">Avance contra la meta</option>
               <option value="tipo">Tipología de la fuerza</option>
@@ -6588,7 +6644,13 @@ h2 > .Prov_sello, h3 > .Prov_sello, h4 > .Prov_sello, th > .Prov_sello{
               <option value="part">Participación 2024</option>
             </select>
           </label>
+          <label class="D10Z_campo D10Z_campo-l D10Z_transp" title="Transparencia del relleno: los bordes siempre se ven">Transparencia
+            <input type="range" id="D10Z_transp" min="0" max="100" step="1" value="22" aria-describedby="D10Z_transp-v">
+            <output id="D10Z_transp-v" for="D10Z_transp">22%</output>
+          </label>
+          <button type="button" class="D10Z_btn D10Z_btn-pdf" id="D10Z_btn-pdf-sec">PDF del Distrito 10</button>
         </div>
+        <p class="D10Z_cuenta D10Z_busca-msg" id="D10Z_busca-msg" role="status"></p>
         <div class="D10Z_leyenda" id="D10Z_ley-mapa"></div>
         <div class="D10Z_mapa-fila">
           <div id="D10Z_mapa" class="D10Z_mapa" role="region" aria-label="Mapa de secciones"></div>
@@ -6598,6 +6660,12 @@ h2 > .Prov_sello, h3 > .Prov_sello, h4 > .Prov_sello, th > .Prov_sello{
         <div class="D10Z_lec" id="D10Z_lec-mapa"></div>
       </div>
       <div class="D10Z_panel D10Z_resumen" id="D10Z_resumen"></div>
+      <div class="D10Z_panel" id="D10Z_hist-panel">
+        <h2 id="D10Z_tit-hist">Comportamiento histórico</h2>
+        <p class="D10Z_nota" id="D10Z_hist-nota"></p>
+        <div class="D10Z_tabla-env D10Z_libre"><table id="D10Z_tb-hist"></table></div>
+        <div class="D10Z_lec" id="D10Z_lec-hist"></div>
+      </div>
       <div class="D10Z_panel">
           <h2 id="D10Z_tit-cas">Casillas</h2>
           <p class="D10Z_nota" id="D10Z_nota-cas"></p>
@@ -7019,7 +7087,7 @@ h2 > .Prov_sello, h3 > .Prov_sello, h4 > .Prov_sello, th > .Prov_sello{
 </div>
 
 <footer class="Cx-pie">
-  <p><b>Compilación fusionada 2026-10-10.F8</b> · módulo Elec 2026-09-25.S2 · módulo Dip 2026-09-27.D3-mapa (demostración) · módulo D10Z 2026-10-10.Z3 · Briefing, Plan operativo y procedencia de la plataforma v3 · cómputos y casillas 2024 IEPC/INE · meta de votos por sección y PDF directo ·
+  <p><b>Compilación fusionada 2026-10-11.F9</b> · módulo Elec 2026-09-25.S2 · módulo Dip 2026-09-27.D3-mapa (demostración) · módulo D10Z 2026-10-11.Z4 · Briefing, Plan operativo y procedencia de la plataforma v3 · cómputos y casillas 2024 IEPC/INE · meta de votos por sección y PDF directo · hoja PDF por sección y transparencia en Distrito 10 ·
      Consensus Estrategia — Inteligencia de Datos y Análisis Electoral.</p>
   <p>Cada pestaña conserva su propia nota de fuente, método y derechos en su
      pie. No difundir durante veda electoral.</p>
@@ -7713,7 +7781,7 @@ h2 > .Prov_sello, h3 > .Prov_sello, h4 > .Prov_sello, th > .Prov_sello{
   function linea(st, v, tv, factor) {
     var r = avance(st, v, tv, factor); if (r == null) return 'sin dato';
     var obj = objetivo(st, tv, factor);
-    return (st.tipo === 'pct' ? NF1.format(v / tv * 100) + '% contra meta de ' + NF1.format(st.pct) + '%' : NF0.format(v) + ' de ' + NF0.format(obj) + ' votos') + ' (' + NF0.format(r * 100) + '% de la meta' + (r < 1 ? '; faltan ' + NF0.format(Math.ceil(obj - v)) + ' votos' : '') + ')';
+    return (st.tipo === 'pct' ? NF1.format(v / tv * 100) + '% contra meta de ' + NF1.format(st.pct) + '%' : NF0.format(v) + ' de ' + NF0.format(obj) + ' votos') + ' (' + NF0.format(r * 100) + '% de la meta' + (r < 1 ? '; faltan ' + NF0.format(Math.max(1, st.tipo === 'pct' ? Math.ceil(obj - v) : Math.ceil(obj) - Math.round(v))) + ' votos' : '') + ')';
   }
   global.CxMeta = { monta: monta, lee: lee, avance: avance, objetivo: objetivo, color: color, cuenta: cuenta, leyenda: leyenda, linea: linea, texto: texto, polos: polos };
 })(window);
@@ -14356,7 +14424,7 @@ window.Dip_MAPA_CATALOGO = "{\"1\":\"ACATIC\",\"2\":\"ACATLAN DE JUAREZ\",\"3\":
         if (d.listaNominal) txt += '<br>Lista nominal ' + ent(d.listaNominal) + ' · votos ' + ent(d.votacion);
         if (d.pctFuerza != null) txt += '<br>' + global.CxFuerza.nombre() + ': ' + fmtD.format(d.pctFuerza) + '%';
         if (d.ganador) txt += ' · ganó ' + d.ganador;
-        if (global.CxSecc && global.CxSecc.lineaMeta) { var lm = global.CxSecc.lineaMeta(PREF, d); if (lm) txt += '<br>Meta: ' + lm; }
+        if (global.CxSecc && global.CxSecc.lineaMeta) { var lm = global.CxSecc.lineaMeta(PREF, d); if (lm) txt += '<br><span class="Cx-meta-tip">Meta: ' + lm + '</span>'; }
         if (d.margen !== null && d.margen !== undefined) txt += ' &middot; margen ' + pct(d.margen);
       } else {
         txt += ' &middot; sin cómputo 2024 (sección creada después o sin casillas)';
@@ -14435,7 +14503,7 @@ window.Dip_MAPA_CATALOGO = "{\"1\":\"ACATIC\",\"2\":\"ACATLAN DE JUAREZ\",\"3\":
       lista.appendChild(fila('Margen', (d.margen > 0 ? '+' : '') + pct(d.margen)));
     if (d.target != null) lista.appendChild(fila('Votos de ' + global.CxFuerza.nombre(), ent(d.target) + (d.pctFuerza != null ? ' · ' + fmtD.format(d.pctFuerza) + '%' : '')));
     if (d.tipologia) lista.appendChild(fila('Tipología', d.tipologia));
-    if (global.CxSecc && global.CxSecc.lineaMeta) { var lm = global.CxSecc.lineaMeta(PREF, d); if (lm) lista.appendChild(fila('Meta', lm)); }
+    if (global.CxSecc && global.CxSecc.lineaMeta) { var lm = global.CxSecc.lineaMeta(PREF, d); if (lm) { var fm = fila('Meta', lm); fm.className = 'Cx-meta-fila'; lista.appendChild(fm); } }
     (d.votos || []).forEach(function (x) { lista.appendChild(fila(x.nombre, ent(x.v))); });
     if (d.colonias) lista.appendChild(fila('Colonias', d.colonias));
     if (d.nota) lista.appendChild(fila('Nota', d.nota));
@@ -15076,7 +15144,7 @@ window.Dip_MAPA_CATALOGO = "{\"1\":\"ACATIC\",\"2\":\"ACATLAN DE JUAREZ\",\"3\":
         if (d.listaNominal) txt += '<br>Lista nominal ' + ent(d.listaNominal) + ' · votos ' + ent(d.votacion);
         if (d.pctFuerza != null) txt += '<br>' + global.CxFuerza.nombre() + ': ' + fmtD.format(d.pctFuerza) + '%';
         if (d.ganador) txt += ' · ganó ' + d.ganador;
-        if (global.CxSecc && global.CxSecc.lineaMeta) { var lm = global.CxSecc.lineaMeta(PREF, d); if (lm) txt += '<br>Meta: ' + lm; }
+        if (global.CxSecc && global.CxSecc.lineaMeta) { var lm = global.CxSecc.lineaMeta(PREF, d); if (lm) txt += '<br><span class="Cx-meta-tip">Meta: ' + lm + '</span>'; }
         if (d.margen !== null && d.margen !== undefined) txt += ' &middot; margen ' + pct(d.margen);
       } else {
         txt += ' &middot; sin cómputo 2024 (sección creada después o sin casillas)';
@@ -15155,7 +15223,7 @@ window.Dip_MAPA_CATALOGO = "{\"1\":\"ACATIC\",\"2\":\"ACATLAN DE JUAREZ\",\"3\":
       lista.appendChild(fila('Margen', (d.margen > 0 ? '+' : '') + pct(d.margen)));
     if (d.target != null) lista.appendChild(fila('Votos de ' + global.CxFuerza.nombre(), ent(d.target) + (d.pctFuerza != null ? ' · ' + fmtD.format(d.pctFuerza) + '%' : '')));
     if (d.tipologia) lista.appendChild(fila('Tipología', d.tipologia));
-    if (global.CxSecc && global.CxSecc.lineaMeta) { var lm = global.CxSecc.lineaMeta(PREF, d); if (lm) lista.appendChild(fila('Meta', lm)); }
+    if (global.CxSecc && global.CxSecc.lineaMeta) { var lm = global.CxSecc.lineaMeta(PREF, d); if (lm) { var fm = fila('Meta', lm); fm.className = 'Cx-meta-fila'; lista.appendChild(fm); } }
     (d.votos || []).forEach(function (x) { lista.appendChild(fila(x.nombre, ent(x.v))); });
     if (d.colonias) lista.appendChild(fila('Colonias', d.colonias));
     if (d.nota) lista.appendChild(fila('Nota', d.nota));
@@ -17434,8 +17502,9 @@ window.Estr_DATA_GZ = window.D10Z_DATA_GZ;</script>
   function partSeccion(s) { var x = seccionesMapa(ELX[S.el].k ? S.el : 'DL24', S.f, s); return x ? x.part : null; }
   function estiloMapa(ft) {
     var p = ft.properties, d10 = p.d === 10, c = colorMapa(p.s);
-    if (!d10 && !c) return { fillColor: css('--D10Z_sindato'), fillOpacity: 0.35, color: css('--D10Z_filete'), weight: 0.4, opacity: 0.6 };
-    return { fillColor: c || css('--D10Z_sindato'), fillOpacity: c ? 0.78 : 0.4, color: css('--D10Z_panel'), weight: d10 ? 0.8 : 0.4, opacity: 0.9 };
+    var op = 1 - (S.transp == null ? 22 : S.transp) / 100, k = op / 0.78, ver = op < 0.45;
+    if (!d10 && !c) return { fillColor: css('--D10Z_sindato'), fillOpacity: Math.min(1, 0.35 * k), color: css('--D10Z_filete'), weight: ver ? 0.9 : 0.4, opacity: ver ? 0.9 : 0.6 };
+    return { fillColor: c || css('--D10Z_sindato'), fillOpacity: c ? op : Math.min(1, 0.4 * k), color: ver ? css('--D10Z_tinta') : css('--D10Z_panel'), weight: d10 ? (ver ? 1.4 : 0.8) : (ver ? 0.9 : 0.4), opacity: ver ? 0.8 : 0.9 };
   }
   function estiloBorde(ft) { var d10 = ft.properties.d === 10; return { fill: false, color: css(d10 ? '--D10Z_tinta' : '--D10Z_tinta3'), weight: d10 ? 3.2 : 1.4, opacity: d10 ? 0.95 : 0.7, dashArray: d10 ? null : '5 4' }; }
   function tipMapa(ft) {
@@ -17444,7 +17513,7 @@ window.Estr_DATA_GZ = window.D10Z_DATA_GZ;</script>
     var head = 'Sección <b>' + p.s + '</b>' + (PARTIDAS[p.s] ? ' <i>(2024: ' + PARTIDAS[p.s].join(' + ') + ')</i>' : '') + (x && x.col ? '<br>' + esc(x.col) : '');
     if (!x) return head + '<br>Sin dato en ' + esc(ELX[S.el].nombre);
     var extra = S.capa === 'div' ? '<br>Voto dividido ' + esc(nombreF(divF())) + ': ' + pts(divSeccion(p.s)) + ' pts' : S.capa === 'part' ? '<br>Participación: ' + pc(partSeccion(p.s)) : S.capa === 'prio' ? '<br>Prioridad: ' + esc(x.prio) : '';
-    if (S.capa === 'meta' && window.CxMeta) extra += '<br>Meta: ' + esc(window.CxMeta.linea(metaSt(), x.val, x.tv, factorPol(p.s)));
+    if (window.CxMeta) extra += '<br><span class="Cx-meta-tip">Meta: ' + esc(window.CxMeta.linea(metaSt(), x.val, x.tv, factorPol(p.s))) + '</span>';
     return head + '<br>' + esc(nombreF(S.f)) + ': ' + fmt(x.val) + ' votos · ' + pc(x.pct) + '<br>' + esc(x.tipo) + ' · ganó ' + esc(NOMBRE[x.gan] || x.gan || '—') + extra;
   }
   function leyendaMapa() {
@@ -17475,7 +17544,7 @@ window.Estr_DATA_GZ = window.D10Z_DATA_GZ;</script>
     var dl = seccionesMapa('DL24', S.f, sNuevo), df = seccionesMapa('DF24', S.f, sNuevo);
     F.innerHTML = '<h3 style="margin-top:0">Sección ' + esc(x.s) + '</h3>' + (PARTIDAS[sNuevo] ? '<p class="D10Z_nota">Polígono ' + sNuevo + ' del marco nuevo; dato de 2024: ' + PARTIDAS[sNuevo].join(' + ') + '.</p>' : '') + (x.col ? '<p class="D10Z_nota">' + esc(x.col) + '</p>' : '') +
       '<dl><dt>Elección</dt><dd>' + esc(ELX[S.el].nombre) + '</dd><dt>Casillas</dt><dd>' + x.cas + '</dd><dt>Lista nominal</dt><dd>' + fmt(x.ln) + '</dd><dt>Votos</dt><dd>' + fmt(x.tv) + '</dd><dt>Participación</dt><dd>' + pc(x.part) + '</dd><dt>Ganador</dt><dd>' + esc(NOMBRE[x.gan] || x.gan || '—') + '</dd>' +
-      '<dt>' + esc(nombreF(S.f)) + '</dt><dd>' + fmt(x.val) + ' · ' + pc(x.pct) + '</dd>' + (window.CxMeta ? '<dt>Meta</dt><dd>' + esc(window.CxMeta.linea(metaSt(), x.val, x.tv, factorPol(sNuevo))) + '</dd>' : '') + '<dt>Tipología</dt><dd>' + esc(x.tipo) + '</dd><dt>Ventaja</dt><dd>' + pts(x.mg) + ' pts</dd><dt>Cambio Δ1</dt><dd>' + pts(x.d[0]) + '</dd><dt>Prioridad</dt><dd>' + esc(x.prio) + '</dd>' +
+      '<dt>' + esc(nombreF(S.f)) + '</dt><dd>' + fmt(x.val) + ' · ' + pc(x.pct) + '</dd>' + (window.CxMeta ? '<dt class="Cx-meta-dt">Meta</dt><dd class="Cx-meta-dd">' + esc(window.CxMeta.linea(metaSt(), x.val, x.tv, factorPol(sNuevo))) + '</dd>' : '') + '<dt>Tipología</dt><dd>' + esc(x.tipo) + '</dd><dt>Ventaja</dt><dd>' + pts(x.mg) + ' pts</dd><dt>Cambio Δ1</dt><dd>' + pts(x.d[0]) + '</dd><dt>Prioridad</dt><dd>' + esc(x.prio) + '</dd>' +
       (dl && df && dl.pct != null && df.pct != null ? '<dt>Local / federal 2024</dt><dd>' + pc(dl.pct) + ' / ' + pc(df.pct) + '</dd>' : '') + '</dl>' +
       (sReal.length === 1 ? '<button type="button" class="D10Z_btn" id="D10Z_btn-ficha-inf">Abrir informe de la sección</button>' : '<p class="D10Z_nota">Abre el informe de cada sección desde la pestaña Informe.</p>') + '<p class="D10Z_nota" style="margin-top:8px">Las casillas y el resumen de la sección están debajo del mapa.</p>';
     var b = $('#D10Z_btn-ficha-inf'); if (b) b.addEventListener('click', function () { abrirInforme(sReal[0]); });
@@ -17998,7 +18067,8 @@ window.Estr_DATA_GZ = window.D10Z_DATA_GZ;</script>
     grupos.sort(function (a, b) { return b.v - a.v; });
     return { g1: grupos[0], g2: grupos[1], mg: r.tv ? (grupos[0].v - (grupos[1] ? grupos[1].v : 0)) / r.tv * 100 : null };
   }
-  function pintaResumen() {
+  function pintaResumen() { pintaResumen0(); try { pintaHist(); } catch (e) { if (window.console) console.error(e); } rotuloPdf(); }
+  function pintaResumen0() {
     var P = $('#D10Z_resumen'), modo, L, Fd, tit, sub;
     if (S.sel.length) { modo = 'sel'; L = filaSel('DL24'); Fd = filaSel('DF24'); tit = nombreSel(S.sel); sub = (S.sel.map(function (s) { return D.colonias[s]; }).filter(Boolean)[0] || 'Colonia no registrada en los archivos') + ' · Distrito 10 local y federal'; }
     else if (S.fuera && !D.geo.features.some(function (ft) { return ft.properties.s === S.fuera; })) { modo = 'fuera'; L = filaReal('DL', S.fuera); Fd = filaReal('DF', S.fuera); tit = 'Sección ' + S.fuera; sub = L ? (L.munNom || '') + ' · distrito ' + L.d + ' local' + (Fd ? ' · distrito ' + Fd.d + ' federal' : '') + ' · fuera de Zapopan' : ''; }
@@ -18030,8 +18100,8 @@ window.Estr_DATA_GZ = window.D10Z_DATA_GZ;</script>
     // avance contra la meta
     if (window.CxMeta && modo !== 'dist') {
       var eM = ELX[S.el].k ? ELX[S.el] : eL, rM = eM.k === 'DF' ? Fd : L, vM = rM ? valor(rM, S.f, eM.k ? eM : eL) : null;
-      if (rM && vM != null) h += '<div class="D10Z_res-sub">Meta de votos</div><p style="margin:0;font-size:13.5px">' + esc(CxMeta.texto(metaSt())) + ' (' + esc(eM.nombre) + '): ' + esc(CxMeta.linea(metaSt(), vM, rM.tv, S.sel.length > 1 ? S.sel.length : 1)) + '.</p>';
-    } else if (window.CxMeta && modo === 'dist') { var cm = cuentaMeta(); h += '<div class="D10Z_res-sub">Meta de votos</div><p style="margin:0;font-size:13.5px">Con meta de ' + esc(CxMeta.texto(metaSt())) + ' en ' + esc(ELX[S.el].nombre) + ', <b>' + cm.alc + '</b> de 163 secciones la alcanzan y <b>' + cm.deb + '</b> quedan debajo; faltan <b>' + fmt(cm.faltan) + '</b> votos para que todas lleguen.</p>'; }
+      if (rM && vM != null) h += '<div class="D10Z_res-sub">Meta de votos</div><p class="Cx-meta-p" style="margin:0;font-size:13.5px">' + esc(CxMeta.texto(metaSt())) + ' (' + esc(eM.nombre) + '): ' + esc(CxMeta.linea(metaSt(), vM, rM.tv, S.sel.length > 1 ? S.sel.length : 1)) + '.</p>';
+    } else if (window.CxMeta && modo === 'dist') { var cm = cuentaMeta(); h += '<div class="D10Z_res-sub">Meta de votos</div><p class="Cx-meta-p" style="margin:0;font-size:13.5px">Con meta de ' + esc(CxMeta.texto(metaSt())) + ' en ' + esc(ELX[S.el].nombre) + ', <b>' + cm.alc + '</b> de 163 secciones la alcanzan y <b>' + cm.deb + '</b> quedan debajo; faltan <b>' + fmt(cm.faltan) + '</b> votos para que todas lleguen.</p>'; }
     // boleta partida
     var cands = ['MC', 'FYC', 'SHH'];
     if (modo === 'dist') { var bp = partidaSecc(); h += '<div class="D10Z_res-sub">Boleta partida</div><p style="margin:0;font-size:13.5px">Sumando sección por sección, al menos <b>' + fmt(bp.mc) + '</b> electores votaron distinto en la boleta local y en la federal midiendo solo a MC (como el Plan operativo) y al menos <b>' + fmt(bp.tres) + '</b> contando las tres candidaturas.</p>'; Fd = null; }
@@ -18567,6 +18637,358 @@ window.Estr_DATA_GZ = window.D10Z_DATA_GZ;</script>
   };
 
   /* =====================================================================
+     F9 · COMPORTAMIENTO HISTÓRICO (debajo del mapa)
+     Una fila por elección 2015–2024 para lo que esté marcado en el mapa:
+     una sección, varias (se suman) o, sin marca, el distrito completo.
+     El cambio se mide contra la elección comparable que el tablero ya usa
+     en todas sus vistas (la misma del «Cambio Δ1» de la ficha).
+     ===================================================================== */
+  var ORDEN_HIST = ['2015-MUN', '2018-MUN', '2018-DL', '2018-DF', '2021-MUN', '2021-DL', '2021-MUN-T24', 'DL24', 'DF24'];
+  function histSel(id, f, sel) {
+    if (!ELX[id]) return null;
+    var F = filas(id), rows = sel.map(function (s) { return F[s]; }).filter(Boolean);
+    if (!rows.length) return { n: 0 };
+    var x = rows.length === 1 ? seccionDe(id, f, rows[0].s) : calcFila(fusion(rows, rows[0].s), secciones(id, f).ctx, f);
+    if (!x) return { n: 0 };
+    return { n: rows.length, tv: x.tv, val: x.val, pct: x.pct, gan: x.gan, inc: rows.some(function (r) { return r.q === 'Incompleta'; }) };
+  }
+  function histDist(id, f) {
+    var e = ELX[id]; if (!e) return null;
+    var T = total(id), v = valor(T, f, e);
+    return { n: e.k ? 163 : +e.r.secciones, tv: T.tv, val: v, pct: v == null || !T.tv ? null : v / T.tv * 100, gan: e.k ? ganador24(T, e.k) : (GANA[e.r.primera] || e.r.primera), inc: id === '2018-DL', dist: true };
+  }
+  function filasHist() {
+    var f = S.f, sel = S.sel.slice(), modo = sel.length ? 'sel' : 'dist';
+    var calc = function (id) { return modo === 'sel' ? histSel(id, f, sel) : histDist(id, f); };
+    return { modo: modo, n: sel.length, filas: ORDEN_HIST.filter(function (id) { return ELX[id]; }).map(function (id) {
+      var e = ELX[id], r = calc(id) || { n: 0 }, cid = null, c = null;
+      /* primera elección comparable con dato completo (la misma lista que usa el tablero) */
+      if (r.n && r.pct != null) (e.cmp || []).some(function (k) { if (!ELX[k]) return false; var q = calc(k); if (q && q.n && !q.inc && q.pct != null) { cid = k; c = q; return true; } return false; });
+      return { id: id, e: e, r: r, cid: cid, cambio: c ? r.pct - c.pct : null };
+    }) };
+  }
+  function pintaHist() {
+    var tb = $('#D10Z_tb-hist'), nota = $('#D10Z_hist-nota'), tit = $('#D10Z_tit-hist'); if (!tb) return;
+    var nF = nombreF(S.f);
+    if (S.fuera && !S.sel.length) {
+      if (tit) tit.textContent = 'Comportamiento histórico';
+      nota.textContent = 'La sección ' + S.fuera + ' está fuera del Distrito 10: el histórico 2015–2021 solo existe para las secciones del distrito.';
+      tb.innerHTML = ''; lec('D10Z_lec-hist', []); return;
+    }
+    var H = filasHist(), sel = S.sel;
+    if (tit) tit.textContent = 'Comportamiento histórico · ' + (H.modo === 'dist' ? 'Distrito 10 completo' : sel.length === 1 ? 'sección ' + sel[0] : sel.length + ' secciones sumadas');
+    nota.innerHTML = 'Votos de <b>' + esc(nF) + '</b> en cada elección del tablero, de 2015 a 2024. ' +
+      (H.modo === 'dist' ? 'Cada fila es el distrito de ese año: los trazos de 2015, 2018 y 2021 no coinciden con el de 2024, por eso la columna de cobertura dice cuántas secciones suma. «2021 Munícipes, trazo 2024» es la fila más comparable con 2024.' : 'Las secciones creadas después de una elección no tienen dato en ella.') +
+      ' El cambio se mide en puntos contra la elección comparable de esa fila. La diputación local 2018 viene incompleta en el archivo de origen.';
+    var h = '<thead><tr><th>Elección</th><th class="D10Z_d">Cobertura</th><th>Ganador</th><th class="D10Z_d">Votos totales</th><th class="D10Z_d">Votos ' + esc(nF) + '</th><th class="D10Z_d">%</th><th class="D10Z_d">Cambio (pts)</th><th>Comparada con</th></tr></thead><tbody>';
+    H.filas.forEach(function (o) {
+      var r = o.r, sinDato = !r.n;
+      h += '<tr' + (o.id === S.el ? ' style="font-weight:700"' : '') + '><td>' + esc(o.e.nombre) + (r.inc ? ' <span class="D10Z_tenue" title="Archivo de origen incompleto">(incompleta)</span>' : '') + '</td>' +
+        '<td class="D10Z_d">' + (sinDato ? '<span class="D10Z_tenue">sin dato</span>' : r.dist ? fmt(r.n) + ' secc.' : r.n + ' de ' + sel.length) + '</td>' +
+        '<td>' + (sinDato || !r.gan ? '<span class="D10Z_tenue">—</span>' : etiqueta(r.gan)) + '</td>' +
+        '<td class="D10Z_d">' + (sinDato ? '—' : fmt(r.tv)) + '</td>' +
+        '<td class="D10Z_d">' + (sinDato || r.val == null ? '<span class="D10Z_tenue">—</span>' : fmt(r.val)) + '</td>' +
+        '<td class="D10Z_d">' + (sinDato ? '—' : pc(r.pct)) + '</td>' +
+        '<td class="D10Z_d">' + (o.cambio == null ? '<span class="D10Z_tenue">—</span>' : pts(o.cambio)) + '</td>' +
+        '<td>' + (o.cid ? esc(ELX[o.cid].nombre) : '<span class="D10Z_tenue">—</span>') + '</td></tr>';
+    });
+    tb.innerHTML = h + '</tbody>';
+    /* lectura */
+    var con = H.filas.filter(function (o) { return o.r.n && o.r.pct != null; });
+    var ult = con.filter(function (o) { return o.id === 'DL24'; })[0], ref = con.filter(function (o) { return o.id === '2021-MUN-T24' || o.id === '2021-DL'; });
+    var mejor = con.slice().sort(function (a, b) { return b.r.pct - a.r.pct; })[0], peor = con.slice().sort(function (a, b) { return a.r.pct - b.r.pct; })[0];
+    var gan = {}; con.forEach(function (o) { if (o.r.gan) gan[o.r.gan] = (gan[o.r.gan] || 0) + 1; });
+    var domina = Object.keys(gan).sort(function (a, b) { return gan[b] - gan[a]; })[0];
+    var P = [];
+    if (con.length) P.push('Con datos en <b>' + con.length + ' de ' + H.filas.length + '</b> elecciones, ' + esc(nF) + ' tuvo su mejor resultado en <b>' + esc(mejor.e.nombre) + '</b> (' + pc(mejor.r.pct) + ') y el más bajo en <b>' + esc(peor.e.nombre) + '</b> (' + pc(peor.r.pct) + ').' + (domina ? ' Ganó <b>' + esc(NOMBRE[domina] || domina) + '</b> en ' + gan[domina] + ' de ' + con.length + '.' : ''));
+    if (ult && ult.cambio != null) P.push('En la diputación local 2024 ' + esc(nF) + ' quedó en ' + pc(ult.r.pct) + ', <b>' + pts(ult.cambio) + ' pts</b> contra ' + esc(ELX[ult.cid].nombre) + '. ' + (ult.cambio > 0 ? 'La tendencia es favorable: la tarea es retener a quien llegó en 2024.' : 'La tendencia es a la baja: hay que recuperar al votante que se fue antes de buscar uno nuevo.'));
+    else if (ult) P.push('En la diputación local 2024 ' + esc(nF) + ' quedó en ' + pc(ult.r.pct) + '; no hay una elección comparable completa para medir el cambio.');
+    if (!ref.length && H.modo === 'sel') P.push('Esta selección no tiene dato de 2021: son secciones nuevas o que no estaban en el distrito. Su única referencia es 2024.');
+    IMPL['D10Z_lec-hist'] = function () {
+      var out = [];
+      if (ult && ult.cambio != null && ult.cambio < 0) out.push('Antes de las precampañas (' + CAL.prec + '), cruza el registro de simpatizantes y promovidos que conserve la estructura desde 2021 con la lista nominal de ' + (H.modo === 'sel' ? 'la sección' : 'las secciones') + ' y contáctalos uno a uno: es el voto que ya fue de ' + esc(nF) + ' y se perdió en 2024.');
+      else if (ult && ult.cambio != null) out.push('Antes de las precampañas (' + CAL.prec + '), identifica a los ' + fmt(ult.r.val) + ' votantes de 2024 con la estructura (promovidos y representantes) y fija con ellos un segundo contacto: en una intermedia la participación cae y el voto que no se refuerza se queda en casa.');
+      if (mejor && mejor.id !== 'DL24') out.push('Usa el resultado de <b>' + esc(mejor.e.nombre) + '</b> (' + pc(mejor.r.pct) + ') como techo probado: la meta de ' + (H.modo === 'sel' ? 'la sección' : 'cada sección') + ' no debería quedar por debajo de ese porcentaje sin una razón documentada.');
+      out.push('En campaña (del ' + CAL.camp + ' al ' + CAL.campFin + '), revisa esta tabla cada semana junto con la meta del mapa: si el ganador histórico es otro partido, el mensaje es de contraste; si ha sido ' + esc(nF) + ', el mensaje es de continuidad y movilización.');
+      return out;
+    };
+    lec('D10Z_lec-hist', P, 'Lectura del histórico');
+  }
+
+  /* =====================================================================
+     F9 · TRANSPARENCIA DEL MAPA Y PDF DE LA SECCIÓN (O DEL DISTRITO)
+     · El deslizador cambia solo el relleno de los polígonos; los bordes se
+       quedan, así se ven las calles y la superficie de cada sección.
+     · El botón PDF arma una hoja de consulta horizontal: en la página 1 el
+       mapa de la sección (o del distrito) con borde amarillo y relleno al
+       80% de transparencia, más su ficha; después, tal como aparecen
+       debajo del mapa, el resumen, el comportamiento histórico y las
+       casillas. Descarga directa (html2canvas + jsPDF incrustados).
+     ===================================================================== */
+  var TRANSP_DEF = 22;
+  function montaTransp() {
+    var r = $('#D10Z_transp'), o = $('#D10Z_transp-v'); if (!r) return;
+    var g = null; try { g = localStorage.getItem('Cx-d10z-transp'); } catch (e) { }
+    S.transp = g != null && g !== '' && !isNaN(+g) ? Math.max(0, Math.min(100, +g)) : TRANSP_DEF;
+    r.value = S.transp; o.textContent = S.transp + '%';
+    r.addEventListener('input', function () {
+      S.transp = +r.value; o.textContent = S.transp + '%';
+      if (CAPA) CAPA.setStyle(estiloMapa);
+      try { localStorage.setItem('Cx-d10z-transp', String(S.transp)); } catch (e) { }
+    });
+    var b = $('#D10Z_btn-pdf-sec'); if (b) b.addEventListener('click', function () { pdfSeccion(); });
+    rotuloPdf();
+  }
+  function rotuloPdf() {
+    var b = $('#D10Z_btn-pdf-sec'); if (!b || b.disabled) return;
+    b.textContent = S.sel.length > 1 ? 'PDF de las secciones' : S.sel.length || S.fuera ? 'PDF de la sección' : 'PDF del Distrito 10';
+    b.title = S.sel.length || S.fuera ? 'Descarga la hoja de consulta de lo marcado en el mapa' : 'Sin sección marcada: descarga la hoja de consulta de todo el Distrito 10';
+  }
+
+  /* ---------- mapa propio en lienzo (teselas OSM + polígonos) ---------- */
+  function mx(lon, z) { return (lon + 180) / 360 * 256 * Math.pow(2, z); }
+  function my(lat, z) { var s = Math.sin(lat * Math.PI / 180); return (0.5 - Math.log((1 + s) / (1 - s)) / (4 * Math.PI)) * 256 * Math.pow(2, z); }
+  function anillos(g) { return g.type === 'Polygon' ? g.coordinates : g.coordinates.reduce(function (a, p) { return a.concat(p); }, []); }
+  function caja(fts) {
+    var b = [180, 90, -180, -90];
+    fts.forEach(function (ft) { anillos(ft.geometry).forEach(function (an) { an.forEach(function (p) { if (p[0] < b[0]) b[0] = p[0]; if (p[1] < b[1]) b[1] = p[1]; if (p[0] > b[2]) b[2] = p[0]; if (p[1] > b[3]) b[3] = p[1]; }); }); });
+    return b;
+  }
+  function cargaImg(url, ms) {
+    return new Promise(function (res) {
+      var im = new Image(), listo = false, fin = function (ok) { if (listo) return; listo = true; res(ok ? im : null); };
+      im.crossOrigin = 'anonymous'; im.onload = function () { fin(true); }; im.onerror = function () { fin(false); };
+      setTimeout(function () { fin(false); }, ms || 9000); im.src = url;
+    });
+  }
+  function rgba(hex, a) {
+    var h = String(hex || '').trim();
+    if (/^rgb/.test(h)) { var n = h.match(/[\d.]+/g) || [0, 0, 0]; return 'rgba(' + n[0] + ',' + n[1] + ',' + n[2] + ',' + a + ')'; }
+    h = h.replace('#', ''); if (h.length === 3) h = h.split('').map(function (c) { return c + c; }).join('');
+    return 'rgba(' + parseInt(h.slice(0, 2), 16) + ',' + parseInt(h.slice(2, 4), 16) + ',' + parseInt(h.slice(4, 6), 16) + ',' + a + ')';
+  }
+  /* objetivo: polígonos a destacar; dist: true si es el distrito completo */
+  function lienzoMapa(objetivo, dist, W, H) {
+    var b = caja(objetivo), pad = dist ? 0.06 : 0.22;
+    var dx0 = mx(b[2], 0) - mx(b[0], 0), dy0 = my(b[1], 0) - my(b[3], 0);
+    var ajuste = Math.min(W * (1 - 2 * pad) / Math.max(dx0, 1e-9), H * (1 - 2 * pad) / Math.max(dy0, 1e-9));
+    var z = Math.min(18, Math.floor(Math.log(ajuste) / Math.LN2)), sc = Math.min(2, ajuste / Math.pow(2, z));
+    var cx = (mx(b[0], z) + mx(b[2], z)) / 2, cy = (my(b[1], z) + my(b[3], z)) / 2;
+    var izq = cx - W / 2 / sc, arr = cy - H / 2 / sc, der = cx + W / 2 / sc, aba = cy + H / 2 / sc;
+    var px = function (p) { return [(mx(p[0], z) - izq) * sc, (my(p[1], z) - arr) * sc]; };
+    var tiles = [], n = Math.pow(2, z);
+    for (var tx = Math.floor(izq / 256); tx <= Math.floor(der / 256); tx++) for (var ty = Math.floor(arr / 256); ty <= Math.floor(aba / 256); ty++) if (ty >= 0 && ty < n) tiles.push([tx, ty]);
+    return Promise.all(tiles.map(function (t) { return cargaImg('https://tile.openstreetmap.org/' + z + '/' + ((t[0] % n) + n) % n + '/' + t[1] + '.png').then(function (im) { return { t: t, im: im }; }); })).then(function (res) {
+      var c = document.createElement('canvas'); c.width = W; c.height = H;
+      var g = c.getContext('2d'); g.fillStyle = '#EEF0EA'; g.fillRect(0, 0, W, H);
+      var ok = 0;
+      try { g.filter = 'saturate(0.55) contrast(1.02)'; } catch (e) { }
+      res.forEach(function (r) { if (!r.im) return; ok++; g.drawImage(r.im, Math.round((r.t[0] * 256 - izq) * sc), Math.round((r.t[1] * 256 - arr) * sc), Math.ceil(256 * sc) + 1, Math.ceil(256 * sc) + 1); });
+      try { g.filter = 'none'; } catch (e) { }
+      var traza = function (ft) { g.beginPath(); anillos(ft.geometry).forEach(function (an) { an.forEach(function (p, i) { var q = px(p); if (i) g.lineTo(q[0], q[1]); else g.moveTo(q[0], q[1]); }); g.closePath(); }); };
+      var dentro = function (ft) { var k = caja([ft]); return !(mx(k[2], z) < izq || mx(k[0], z) > der || my(k[1], z) < arr || my(k[3], z) > aba); };
+      var set = objetivo.map(function (ft) { return ft; });
+      var visibles = D.geo.features.filter(dentro);
+      /* 1 · relleno al 80% de transparencia (color de la capa activa) */
+      set.forEach(function (ft) { var col = colorMapa(ft.properties.s); if (!col) return; traza(ft); g.fillStyle = rgba(col, 0.2); g.fill('evenodd'); });
+      /* 2 · bordes de todas las secciones visibles */
+      visibles.forEach(function (ft) { traza(ft); var d10 = ft.properties.d === 10; g.strokeStyle = d10 ? 'rgba(40,52,46,0.75)' : 'rgba(90,100,96,0.45)'; g.lineWidth = d10 ? 1.4 : 1; g.stroke(); });
+      /* 3 · contorno de los distritos vecinos (contexto) */
+      (D.bordes.features || []).forEach(function (ft) { if (ft.properties.d === 10) return; traza(ft); g.setLineDash([10, 7]); g.strokeStyle = 'rgba(60,70,66,0.6)'; g.lineWidth = 2; g.stroke(); g.setLineDash([]); });
+      /* 4 · borde amarillo con halo oscuro */
+      var contorno = dist ? (D.bordes.features || []).filter(function (ft) { return ft.properties.d === 10; }) : set;
+      if (!contorno.length) contorno = set;
+      contorno.forEach(function (ft) { traza(ft); g.strokeStyle = 'rgba(17,17,17,0.55)'; g.lineWidth = dist ? 11 : 12; g.lineJoin = 'round'; g.stroke(); });
+      contorno.forEach(function (ft) { traza(ft); g.strokeStyle = AMARILLO; g.lineWidth = dist ? 6 : 7; g.lineJoin = 'round'; g.stroke(); });
+      /* 5 · número de cada sección */
+      var etiq = dist ? set : visibles;
+      g.textAlign = 'center'; g.textBaseline = 'middle';
+      etiq.forEach(function (ft) {
+        var c0 = ft.properties.c; if (!c0) return; var q = px([c0[1], c0[0]]); if (q[0] < 0 || q[1] < 0 || q[0] > W || q[1] > H) return;
+        var k = caja([ft]), a = (mx(k[2], z) - mx(k[0], z)) * sc, h = (my(k[1], z) - my(k[3], z)) * sc; if (Math.min(a, h) < (dist ? 30 : 34)) return;
+        var prop = objetivo.indexOf(ft) >= 0;
+        g.font = (prop ? '700 ' : '600 ') + (dist ? 15 : prop ? 30 : 17) + 'px Helvetica, Arial, sans-serif';
+        g.lineWidth = 4; g.strokeStyle = 'rgba(255,255,255,0.92)'; g.strokeText(String(ft.properties.s), q[0], q[1]);
+        g.fillStyle = prop ? '#111' : '#3C4842'; g.fillText(String(ft.properties.s), q[0], q[1]);
+      });
+      /* 6 · escala, norte y créditos */
+      var latC = (b[1] + b[3]) / 2, mPorPx = 156543.03392 * Math.cos(latC * Math.PI / 180) / Math.pow(2, z) / sc;
+      var objetivoM = W * 0.2 * mPorPx, paso = [50, 100, 200, 250, 500, 1000, 2000, 2500, 5000].filter(function (m) { return m <= objetivoM; }).pop() || 50, lpx = paso / mPorPx;
+      g.fillStyle = 'rgba(255,255,255,0.88)'; g.fillRect(18, H - 62, lpx + 36, 44);
+      g.fillStyle = '#1B1B1B'; g.fillRect(36, H - 34, lpx, 6); g.fillStyle = '#fff'; g.fillRect(36 + lpx / 2, H - 33, lpx / 2, 4);
+      g.font = '600 17px Helvetica, Arial, sans-serif'; g.textAlign = 'left'; g.fillStyle = '#1B1B1B'; g.fillText(paso >= 1000 ? paso / 1000 + ' km' : paso + ' m', 36, H - 47);
+      g.textAlign = 'center'; g.font = '700 22px Helvetica, Arial, sans-serif'; g.fillStyle = 'rgba(255,255,255,0.88)'; g.fillRect(W - 54, 16, 38, 52); g.fillStyle = '#1B1B1B';
+      g.beginPath(); g.moveTo(W - 35, 22); g.lineTo(W - 44, 42); g.lineTo(W - 26, 42); g.closePath(); g.fill(); g.fillText('N', W - 35, 56);
+      var cred = ok ? '© colaboradores de OpenStreetMap · cartografía seccional INE' : 'Sin conexión: mapa base no disponible · cartografía seccional INE';
+      g.font = '500 15px Helvetica, Arial, sans-serif'; var wc = g.measureText(cred).width;
+      g.fillStyle = 'rgba(255,255,255,0.88)'; g.fillRect(W - wc - 28, H - 32, wc + 18, 24); g.fillStyle = '#333'; g.textAlign = 'right'; g.fillText(cred, W - 16, H - 19);
+      g.strokeStyle = '#9EAE99'; g.lineWidth = 2; g.strokeRect(1, 1, W - 2, H - 2);
+      return { c: c, teselas: ok, total: res.length, z: z };
+    });
+  }
+
+  /* ---------- ficha de la columna derecha (texto vectorial) ---------- */
+  function pdfTxt(t) {
+    return String(t == null ? '' : t).replace(/Cambio Δ1/g, 'Cambio vs. anterior (pts)').replace(/−/g, '-').replace(/Δ/g, 'D').replace(/≈/g, '~').replace(/→/g, '->').replace(/–|—/g, '-').replace(/ | /g, ' ').replace(/[^\x00-\xff‘’“”…•€]/g, '');
+  }
+  function datosColumna() {
+    var out = [];
+    var dl = $('#D10Z_ficha dl');
+    if (S.sel.length && dl) {
+      var dts = $$('dt', dl);
+      dts.forEach(function (dt) { var dd = dt.nextElementSibling; out.push({ k: dt.textContent.trim(), v: dd ? dd.textContent.trim() : '', meta: /Meta/.test(dt.textContent) && dt.classList.contains('Cx-meta-dt') }); });
+      return out;
+    }
+    $$('#D10Z_resumen .D10Z_res-kpis > div').forEach(function (d) { var bb = d.querySelector('b'), sp = d.querySelector('span'); if (bb && sp) out.push({ k: sp.textContent.trim(), v: bb.textContent.trim() }); });
+    $$('#D10Z_resumen .D10Z_chips-t').slice(0, 2).forEach(function (c) { var t = c.textContent.replace(/\s+/g, ' ').trim(), i = t.indexOf(':'); if (i > 0 && /^(Local|Federal)/.test(t)) out.push({ k: 'Ganador 2024 ' + t.slice(0, i).toLowerCase(), v: t.slice(i + 1).trim() }); });
+    var L2 = total(ELX[S.el].k ? S.el : 'DL24'), vF = valor(L2, S.f, ELX[ELX[S.el].k ? S.el : 'DL24']);
+    if (!S.fuera && vF != null) out.push({ k: nombreF(S.f), v: fmt(vF) + ' · ' + pc(vF / L2.tv * 100) });
+    var mp = $('#D10Z_resumen .Cx-meta-p'); if (mp) out.push({ k: 'Meta', v: mp.textContent.replace(/\s+/g, ' ').trim(), meta: true });
+    return out;
+  }
+  function columnaPdf(doc, x, y, w, yMax, filas) {
+    var LH = 4.0;
+    filas.forEach(function (f) {
+      var k = pdfTxt(f.k), v = pdfTxt(f.v);
+      doc.setFontSize(9.2);
+      doc.setFont('helvetica', 'normal'); var wk = doc.getTextWidth(k);
+      doc.setFont('helvetica', 'bold'); var wv = doc.getTextWidth(v);
+      var una = !f.meta && wk + wv + 5 <= w, lv = una ? [v] : doc.splitTextToSize(v, w), alto = una ? LH + 2.8 : (1 + lv.length) * LH + 2.8;
+      if (y + alto > yMax) return;
+      if (f.meta) { doc.setFillColor(255, 228, 92); doc.roundedRect(x - 2, y - 3.5, w + 4, alto, 1.4, 1.4, 'F'); }
+      doc.setFont('helvetica', f.meta ? 'bold' : 'normal'); doc.setTextColor(f.meta ? 27 : 92, f.meta ? 27 : 104, f.meta ? 27 : 98); doc.text(k, x, y);
+      doc.setFont('helvetica', 'bold'); doc.setTextColor(27, 27, 27);
+      if (una) doc.text(v, x + w, y, { align: 'right' }); else doc.text(lv, x, y + LH);
+      y += alto;
+      if (!f.meta) { doc.setDrawColor(214, 220, 210); doc.setLineWidth(0.15); doc.line(x, y - 3.4, x + w, y - 3.4); }
+    });
+    return y;
+  }
+  /* ---------- captura de bloques bajo el mapa ---------- */
+  function opcionesCap(el) {
+    var w = el.getBoundingClientRect().width, h = el.offsetHeight;
+    var o = { backgroundColor: '#FFFFFF', logging: false, useCORS: true, scale: 2, scrollX: 0, scrollY: 0,
+      onclone: function (doc, clon) { if (window.Pdf_ && window.Pdf_.limpia) window.Pdf_.limpia(doc, clon); },
+      ignoreElements: function (n) { return n.tagName === 'BUTTON' || n.tagName === 'INPUT' || n.tagName === 'SELECT' || (n.classList && n.classList.contains('D10Z_pdf-fuera')); } };
+    o.scale = Math.min(2, 2200 / Math.max(w, 1));
+    if (w * h * o.scale * o.scale > 14e6) o.scale = Math.max(1, Math.sqrt(14e6 / (w * h)));
+    o.windowWidth = document.documentElement.clientWidth; o.windowHeight = Math.max(document.documentElement.clientHeight, el.getBoundingClientRect().bottom + 50);
+    return o;
+  }
+  function cap(el) { window.scrollTo(0, 0); var w = el.getBoundingClientRect().width; return window.html2canvas(el, opcionesCap(el)).then(function (c) { return { c: c, w: w, h: c.height / (c.width / w) }; }); }
+  /* Un panel con tabla: encabezado del panel, la tabla en tramos que caben
+     en una página (con su encabezado repetido) y la lectura al final. */
+  function capPanel(panel, tabla, filasPorTramo) {
+    var out = [], hijos = Array.prototype.slice.call(panel.children), env = tabla ? tabla.closest('.D10Z_tabla-env') : null;
+    var iEnv = env ? hijos.indexOf(env) : -1;
+    var antes = iEnv >= 0 ? hijos.slice(0, iEnv) : hijos, despues = iEnv >= 0 ? hijos.slice(iEnv + 1) : [];
+    var oculta = function (ns, v) { ns.forEach(function (n) { n.classList.toggle('D10Z_pdf-fuera', v); }); };
+    var p = Promise.resolve();
+    p = p.then(function () { oculta(env ? [env].concat(despues) : [], true); return cap(panel).then(function (r) { r.junto = !!tabla; out.push(r); }); }).then(function () { oculta(env ? [env].concat(despues) : [], false); });
+    if (tabla) {
+      var trs = $$('tbody tr', tabla); if (!trs.length) trs = $$('tr', tabla).filter(function (tr) { return !tr.closest('thead'); });
+      for (var i = 0; i < Math.max(trs.length, 1); i += filasPorTramo) (function (i) {
+        p = p.then(function () {
+          trs.forEach(function (tr, j) { tr.classList.toggle('D10Z_pdf-fuera', j < i || j >= i + filasPorTramo); });
+          if (tabla.tFoot) tabla.tFoot.classList.toggle('D10Z_pdf-fuera', i + filasPorTramo < trs.length);
+          return cap(tabla).then(function (r) { out.push(r); });
+        });
+      })(i);
+      p = p.then(function () { trs.forEach(function (tr) { tr.classList.remove('D10Z_pdf-fuera'); }); if (tabla.tFoot) tabla.tFoot.classList.remove('D10Z_pdf-fuera'); });
+    }
+    if (despues.length) p = p.then(function () {
+      var vis = despues.filter(function (n) { return n.textContent.trim() && n.getBoundingClientRect().height > 2; });
+      return vis.reduce(function (q, n) { return q.then(function () { return cap(n).then(function (r) { out.push(r); }); }); }, Promise.resolve());
+    });
+    return p.then(function () { return out; });
+  }
+
+  var PDF_EN_CURSO = false;
+  function pdfSeccion() {
+    if (PDF_EN_CURSO) return;
+    if (!window.html2canvas || !window.jspdf) { alert('No se pudo cargar el generador de PDF en este navegador.'); return; }
+    if (!MAPA || !CAPA) { alert('Abre el mapa una vez antes de generar el PDF.'); return; }
+    PDF_EN_CURSO = true;
+    var btn = $('#D10Z_btn-pdf-sec'), rot = btn.textContent; btn.disabled = true; btn.textContent = 'Generando PDF…';
+    var raiz = document.documentElement, tema = raiz.getAttribute('data-tema'), app = document.getElementById('D10Z_app'), anchoPrevio = app.style.width;
+    var sel = S.sel.slice(), fuera = S.fuera, dist = !sel.length && !fuera;
+    var objetivo = sel.length ? poligonosDe(sel) : fuera ? D.geo.features.filter(function (ft) { return ft.properties.s === fuera; }) : D.geo.features.filter(function (ft) { return ft.properties.d === 10; });
+    var titulo = dist ? 'Distrito 10 completo' : sel.length ? nombreSel(sel) : 'Sección ' + fuera;
+    var sub = dist ? 'Distrito 10 local · Zapopan · 163 secciones · ' + ELX[S.el].nombre : (sel.length ? (D.colonias[sel[0]] ? D.colonias[sel[0]] + ' · ' : '') + 'Distrito 10 local · Zapopan' : 'Fuera del Distrito 10 · contexto') + ' · ' + ELX[S.el].nombre;
+    var capaTxt = ($('#D10Z_sel-capa').selectedOptions[0] || {}).textContent || '';
+    var archivo = (dist ? 'Distrito-10-Zapopan' : (sel.length > 1 ? 'Secciones-' + sel.join('-') : 'Seccion-' + (sel[0] || fuera)) + '-D10-Zapopan') + '-' + new Date().toISOString().slice(0, 10) + '.pdf';
+    function restaura() {
+      if (tema) { raiz.setAttribute('data-tema', tema); if (window.CxShell && window.CxShell.notificarTema) window.CxShell.notificarTema(); }
+      app.style.width = anchoPrevio; document.body.classList.remove('Pdf_capturando', 'D10Z_pdf-cap');
+      btn.disabled = false; btn.textContent = rot; rotuloPdf(); PDF_EN_CURSO = false; window.dispatchEvent(new Event('resize'));
+    }
+    document.body.classList.add('Pdf_capturando', 'D10Z_pdf-cap');
+    if (window.innerWidth < 1100) app.style.width = '1180px';
+    if (tema) { raiz.removeAttribute('data-tema'); if (window.CxShell && window.CxShell.notificarTema) window.CxShell.notificarTema(); }
+    var espera = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+    var imgMapa, bloques = [];
+    return espera(450).then(function () {
+      Object.keys(CH).forEach(function (k) { var c = CH[k]; if (c && c.canvas && c.canvas.offsetParent) { try { c.resize(); c.update('none'); } catch (e) { } } });
+      return espera(250);
+    }).then(function () {
+      return lienzoMapa(objetivo, dist, 1530, 1530).then(function (m) { imgMapa = m; });
+    }).then(function () {
+      var res = $('#D10Z_resumen'), hist = $('#D10Z_hist-panel'), casP = $('#D10Z_tb-cas').closest('.D10Z_panel');
+      var p = cap(res).then(function (r) { bloques.push(r); });
+      if (hist && $('#D10Z_tb-hist').rows.length) p = p.then(function () { return capPanel(hist, $('#D10Z_tb-hist'), 30).then(function (l) { bloques = bloques.concat(l); }); });
+      else if (hist) p = p.then(function () { return cap(hist).then(function (r) { bloques.push(r); }); });
+      if (casP) p = p.then(function () {
+        var tb = $('#D10Z_tb-cas'), tr = tb.querySelector('tbody tr'), thH = tb.tHead ? tb.tHead.getBoundingClientRect().height : 34, trH = tr ? tr.getBoundingClientRect().height : 30;
+        var refW = res.getBoundingClientRect().width, kT = Math.min(1, refW / Math.max(1, tb.getBoundingClientRect().width)), mmPx = 255.4 / refW * kT, porTramo = Math.max(8, Math.floor((178 / mmPx - thH - 6) / Math.max(trH, 18)));
+        return capPanel(casP, tb, porTramo).then(function (l) { bloques = bloques.concat(l); });
+      });
+      return p.then(function () { return res.getBoundingClientRect().width; });
+    }).then(function (refW) {
+      var jsPDF = window.jspdf.jsPDF, doc = new jsPDF({ unit: 'mm', format: 'letter', orientation: 'landscape', compress: true });
+      var W = 279.4, H = 215.9, M = 12, top = M + 9, bottom = H - M - 5, ancho = W - 2 * M;
+      /* página 1 */
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(17); doc.setTextColor(27, 27, 27); doc.text(pdfTxt(titulo), M, top + 4);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5); doc.setTextColor(80, 92, 86); doc.text(doc.splitTextToSize(pdfTxt(sub), ancho)[0], M, top + 9.5);
+      var yM = top + 13, lado = bottom - yM;
+      doc.addImage(imgMapa.c.toDataURL('image/jpeg', 0.9), 'JPEG', M, yM, lado, lado, undefined, 'FAST');
+      var xC = M + lado + 7, wC = W - M - xC;
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.setTextColor(27, 27, 27); doc.text(dist ? 'Datos del distrito' : 'Ficha de la sección', xC, yM + 3);
+      var yC = columnaPdf(doc, xC, yM + 10, wC, bottom - 24, datosColumna());
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(92, 104, 98);
+      var notaMapa = doc.splitTextToSize(pdfTxt('Relleno: ' + capaTxt + ', con 80% de transparencia. Borde amarillo: ' + (dist ? 'contorno del Distrito 10' : 'lo marcado en el mapa') + '. Líneas punteadas: distritos vecinos.' + (imgMapa.teselas ? '' : ' Sin conexión: el mapa base no se pudo descargar.')), wC);
+      doc.text(notaMapa, xC, Math.max(yC + 2, bottom - notaMapa.length * 3.4));
+      /* páginas siguientes */
+      var mmPx = ancho / refW, y = top, hayPag = false;
+      function nueva() { doc.addPage('letter', 'landscape'); y = top; hayPag = true; }
+      nueva();
+      var med = function (b) { var k = Math.min(1, ancho / (b.w * mmPx)), wmm = b.w * mmPx * k, hmm = b.h * mmPx * k, disp = bottom - top; if (hmm > disp) { wmm = wmm * disp / hmm; hmm = disp; } return [wmm, hmm]; };
+      bloques.forEach(function (b, i) {
+        var m = med(b), wmm = m[0], hmm = m[1];
+        /* el encabezado de un panel no se queda solo al pie de la página: va con el primer tramo de su tabla */
+        var extra = b.junto && bloques[i + 1] ? med(bloques[i + 1])[1] + 3 : 0;
+        if (y > top && y + hmm + extra > bottom) nueva();
+        doc.addImage(b.c.toDataURL('image/jpeg', 0.86), 'JPEG', M, y, wmm, hmm, undefined, 'FAST');
+        y += hmm + 3;
+      });
+      var n = doc.getNumberOfPages(), fecha = new Intl.DateTimeFormat('es-MX', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
+      for (var p = 1; p <= n; p++) {
+        doc.setPage(p); doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(60, 72, 66);
+        doc.text(doc.splitTextToSize(pdfTxt('Consensus Estrategia · Distrito 10 · Zapopan · ' + titulo + ' · ' + nombreF(S.f) + ' · ' + fecha), ancho)[0], M, M + 3);
+        doc.setDrawColor(158, 174, 153); doc.setLineWidth(0.2); doc.line(M, M + 5, W - M, M + 5);
+        doc.text(pdfTxt('Consensus Estrategia · Inteligencia de Datos y Análisis Electoral · Cómputos 2024 IEPC e INE; histórico 2015–2021 del tablero previo'), M, H - M + 2);
+        doc.text('Página ' + p + ' de ' + n, W - M, H - M + 2, { align: 'right' });
+      }
+      doc.setProperties({ title: pdfTxt('Hoja de consulta · ' + titulo + ' · Distrito 10 Zapopan'), subject: 'Consensus Estrategia', creator: 'Consensus Estrategia' });
+      doc.save(archivo);
+      window.D10Z_pdfUltimo = { archivo: archivo, paginas: n, teselas: imgMapa.teselas, totalTeselas: imgMapa.total, zoom: imgMapa.z, bloques: bloques.length };
+    }).catch(function (e) {
+      if (window.console) console.error(e);
+      alert('No se pudo generar el PDF: ' + (e && e.message ? e.message : e));
+    }).then(restaura);
+  }
+  window.D10Z_pdf = function () { return pdfSeccion(); };
+
+  /* =====================================================================
      F7 · PLAN OPERATIVO
      El motor de Estrategia de la v3 (Estr_ y su capa prescriptiva) vive
      ahora en esta subpestaña: una sola fuente de verdad que también lee
@@ -18668,7 +19090,7 @@ window.Estr_DATA_GZ = window.D10Z_DATA_GZ;</script>
     $('#D10Z_cas-alc').addEventListener('change', pintaCasillas);
     $('#D10Z_cas-q').addEventListener('input', pintaCasillas);
     $('#D10Z_btn-csv-cas').addEventListener('click', csvCasillas);
-    montaMeta();
+    montaMeta(); montaTransp();
     $$('.D10Z_tab').forEach(function (t, i, all) {
       t.addEventListener('click', function () { activa(t.getAttribute('data-d10z_vista')); });
       t.addEventListener('keydown', function (ev) { var j = ev.key === 'ArrowRight' ? i + 1 : ev.key === 'ArrowLeft' ? i - 1 : null; if (j == null) return; j = (j + all.length) % all.length; all[j].focus(); activa(all[j].getAttribute('data-d10z_vista')); });
@@ -18712,7 +19134,7 @@ window.Estr_DATA_GZ = window.D10Z_DATA_GZ;</script>
       if (window.CxReal) window.CxReal.cargar().then(function () { if (S.vista === 'panorama') pintaOperador(); else if (S.vista === 'mapa') pintaResumen(); });
       controles(); llenaSelInf(); marcaGlobal();
       $('#D10Z_cargando').hidden = true;
-      $('#D10Z_pie').textContent = 'Módulo D10Z_ 2026-10-10.Z3 (datos ' + D.version + ') · generado el 10 de octubre de 2026. Datos incrustados; funciona sin conexión salvo las teselas del mapa y las tipografías. Fuentes: cómputos por casilla 2024 local (IEPC Jalisco) y federal (INE), tablero previo del Distrito 10 (histórico 2015–2021, acta local 2024, cruceros, tianguis y colonias) y cartografía seccional de la página Electoral.';
+      $('#D10Z_pie').textContent = 'Módulo D10Z_ 2026-10-11.Z4 (datos ' + D.version + ') · generado el 11 de octubre de 2026. Datos incrustados; funciona sin conexión salvo las teselas del mapa y las tipografías. Fuentes: cómputos por casilla 2024 local (IEPC Jalisco) y federal (INE), tablero previo del Distrito 10 (histórico 2015–2021, acta local 2024, cruceros, tianguis y colonias) y cartografía seccional de la página Electoral.';
       var v = 'panorama'; try { v = localStorage.getItem('D10Z_vista') || 'panorama'; } catch (e) { }
       if (SUB_PEND) { v = SUB_PEND; SUB_PEND = null; }
       if (!document.getElementById('D10Z_v-' + v)) v = 'panorama';
@@ -20598,6 +21020,17 @@ window.Estr_DATA_GZ = window.D10Z_DATA_GZ;</script>
   var RAMPA_IEM = '#1E3A8A';
   /* F8 · meta de votos del Plan operativo (independiente de los demás mapas) */
   var META_PLAN = null;
+  function escH(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function tipDiv() { var m = $('#Estr_mapa'), t = m && m.querySelector('.Estr_tip'); if (m && !t) { t = document.createElement('div'); t.className = 'Estr_tip'; t.setAttribute('aria-hidden', 'true'); t.hidden = true; m.appendChild(t); } return t; }
+  function tipMuestra(ev) { var t = tipDiv(); if (!t) return; t.innerHTML = ev.currentTarget.__tip || ''; t.hidden = false; tipMueve(ev); }
+  function tipMueve(ev) {
+    var t = tipDiv(), m = $('#Estr_mapa'); if (!t || !m) return;
+    var r = m.getBoundingClientRect(), x = ev.clientX - r.left + 14, y = ev.clientY - r.top + 14;
+    if (x + t.offsetWidth > r.width - 4) x = Math.max(4, ev.clientX - r.left - t.offsetWidth - 14);
+    if (y + t.offsetHeight > r.height - 4) y = Math.max(4, ev.clientY - r.top - t.offsetHeight - 14);
+    t.style.left = x + 'px'; t.style.top = y + 'px';
+  }
+  function tipOculta() { var t = tipDiv(); if (t) t.hidden = true; }
   function metaEst() { return META_PLAN ? META_PLAN.estado : global.CxMeta.lee('plan'); }
 
   function pintaMapa() {
@@ -20674,13 +21107,17 @@ window.Estr_DATA_GZ = window.D10Z_DATA_GZ;</script>
       path.setAttribute('fill', relleno);
       if (f && vista.seccion === s) path.classList.add('Estr_poly-activa');
 
-      var tit = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-      tit.textContent = f
-        ? 'Sección ' + s + (f.colonia ? ' · ' + f.colonia : '') +
-          ' — IEM ' + dec(f.iem) + ', ' + ent(f.juego) + ' votos en juego, grupo ' +
-          GRUPO_ROT[f.grupo].toLowerCase() + (global.CxMeta ? ' — meta: ' + global.CxMeta.linea(metaEst(), f.propio / 100 * f.tv, f.tv, 1) : '')
-        : 'Sección ' + s + ' · sin resultado en el cómputo de 2024';
-      path.appendChild(tit);
+      /* F9 · globo propio (en lugar de <title>) para resaltar la meta en amarillo */
+      var lMeta = f && global.CxMeta ? global.CxMeta.linea(metaEst(), f.propio / 100 * f.tv, f.tv, 1) : '';
+      path.setAttribute('aria-label', f
+        ? 'Sección ' + s + (f.colonia ? ' · ' + f.colonia : '') + ' — IEM ' + dec(f.iem) + ', ' + ent(f.juego) + ' votos en juego, grupo ' + GRUPO_ROT[f.grupo].toLowerCase() + (lMeta ? ' — meta: ' + lMeta : '')
+        : 'Sección ' + s + ' · sin resultado en el cómputo de 2024');
+      path.__tip = f
+        ? '<b>Sección ' + s + '</b>' + (f.colonia ? ' · ' + escH(f.colonia) : '') + '<br>IEM ' + dec(f.iem) + ' · ' + ent(f.juego) + ' votos en juego<br>Grupo ' + escH(GRUPO_ROT[f.grupo].toLowerCase()) + (lMeta ? '<br><span class="Cx-meta-tip">Meta: ' + escH(lMeta) + '</span>' : '')
+        : '<b>Sección ' + s + '</b><br>Sin resultado en el cómputo de 2024';
+      path.addEventListener('mouseenter', tipMuestra);
+      path.addEventListener('mousemove', tipMueve);
+      path.addEventListener('mouseleave', tipOculta);
 
       if (f) {
         path.addEventListener('click', function () { abreFicha(s); pintaMapa(); });
@@ -23694,6 +24131,8 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
       if (enCurso) return;
       graficas().forEach(function (g) { if (visible(g.canvas) && g.resize) { try { g.resize(); } catch (e) { } } });
     },
+    /* F9 · la hoja PDF de Distrito 10 reutiliza la limpieza de color(srgb …) */
+    limpia: limpiaColores,
     get imprimiendo() { return enCurso; },
     get alcances() { return Object.keys(ALCANCES); }
   };
